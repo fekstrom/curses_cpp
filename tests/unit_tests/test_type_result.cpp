@@ -19,27 +19,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-#ifndef CURSES_CPP_CURSES_HPP_
-#define CURSES_CPP_CURSES_HPP_
+#include "curses_cpp/curses.hpp"
 
-namespace curses
-{
+#include <curses.h>
 
-enum class Result : int
-{
-    Err = -1,
-    Ok  =  0,
-};
+using namespace curses;
 
-constexpr bool operator==(Result a, Result b) { return static_cast<int>(a) == static_cast<int>(b); }
-constexpr bool operator!=(Result a, Result b) { return !(a == b); }
-
-constexpr bool operator==(Result a, int b) { return static_cast<int>(a) == b; }
-constexpr bool operator!=(Result a, int b) { return !(a == b); }
-
-constexpr bool operator==(int a, Result b) { return a == static_cast<int>(b); }
-constexpr bool operator!=(int a, Result b) { return !(a == b); }
-
-} // namespace curses
-
-#endif // Include guard
+static_assert(Result::Ok == Result::Ok);
+static_assert(Result::Err == Result::Err);
+static_assert(Result::Ok == OK);
+static_assert(OK == Result::Ok);
+static_assert(Result::Err == ERR);
+static_assert(ERR == Result::Err);
