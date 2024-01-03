@@ -243,6 +243,11 @@ Result Window::Chgat(PosYx yx, int n, Attr attr)
     RETURN_RESULT(mvwchgat(CHECK_GET(), yx.y, yx.x, n, a, c, nullptr));
 }
 
+Result Window::Erase() { RETURN_RESULT(werase(CHECK_GET())); }
+Result Window::Clear() { RETURN_RESULT(wclear(CHECK_GET())); }
+Result Window::Clrtobot() { RETURN_RESULT(wclrtobot(CHECK_GET())); }
+Result Window::Clrtoeol() { RETURN_RESULT(wclrtoeol(CHECK_GET())); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

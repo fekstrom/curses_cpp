@@ -380,6 +380,13 @@ public:
     Result Chgat(PosYx yx, Attr attr);
     Result Chgat(PosYx yx, int n, Attr attr);
 
+    // curs_clear
+
+    Result Erase();
+    Result Clear();
+    Result Clrtobot();
+    Result Clrtoeol();
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
