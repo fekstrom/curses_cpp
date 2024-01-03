@@ -23,7 +23,11 @@
 
 #include <curses.h>
 
+#include <type_traits>
+
 using namespace curses;
+
+static_assert(std::is_same_v<std::underlying_type_t<Color>, decltype(COLOR_BLACK)>);
 
 static_assert(static_cast<int>(Color::Black)   == COLOR_BLACK);
 static_assert(static_cast<int>(Color::Red)     == COLOR_RED);
