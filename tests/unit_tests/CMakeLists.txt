@@ -5,6 +5,7 @@ target_sources(unit_tests PRIVATE
   dummy.cpp
   test_type_attr.cpp
   test_type_color.cpp
+  test_type_key.cpp
   test_type_result.cpp
 )
 target_link_libraries(unit_tests PRIVATE
