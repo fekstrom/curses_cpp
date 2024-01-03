@@ -316,6 +316,20 @@ public:
     Result Scrollok(bool enable = true);
     Result Setscrreg(int top, int bot);
 
+    // curs_attr
+
+    Result Attron(Attr attr);
+    Result Attroff(Attr attr);
+    Result Attrset(Attr attr);
+    Result Colorset(int pair_number);
+
+    Attr Attrget();
+
+    Result Chgat(Attr attr);
+    Result Chgat(int n, Attr attr);
+    Result Chgat(PosYx yx, Attr attr);
+    Result Chgat(PosYx yx, int n, Attr attr);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

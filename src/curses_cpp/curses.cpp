@@ -179,6 +179,28 @@ Result Window::Leaveok(bool enable) { RETURN_RESULT(leaveok(CHECK_GET(), enable)
 Result Window::Scrollok(bool enable) { RETURN_RESULT(scrollok(CHECK_GET(), enable)); }
 Result Window::Setscrreg(int top, int bot) { RETURN_RESULT(wsetscrreg(CHECK_GET(), top, bot)); }
 
+Result Window::Attron(Attr attr) { RETURN_RESULT(wattron(CHECK_GET(), static_cast<int>(attr))); }
+Result Window::Attroff(Attr attr) { RETURN_RESULT(wattroff(CHECK_GET(), static_cast<int>(attr))); }
+Result Window::Attrset(Attr attr) { RETURN_RESULT(wattrset(CHECK_GET(), static_cast<int>(attr))); }
+Result Window::Colorset(int pair_number) { RETURN_RESULT(wcolor_set(CHECK_GET(), static_cast<short>(pair_number), nullptr)); }
+Attr Window::Attrget() { return static_cast<Attr>(getattrs(CHECK_GET())); }
+
+Result Window::Chgat(Attr attr) { return Chgat(-1, attr); }
+Result Window::Chgat(int n, Attr attr)
+{
+    const auto a = static_cast<attr_t>(RemoveColor(attr));
+    const auto c = static_cast<short>(PairNumber(attr));
+    RETURN_RESULT(wchgat(CHECK_GET(), n, a, c, nullptr));
+}
+
+Result Window::Chgat(PosYx yx, Attr attr) { return Chgat(yx, -1, attr); }
+Result Window::Chgat(PosYx yx, int n, Attr attr)
+{
+    const auto a = static_cast<attr_t>(RemoveColor(attr));
+    const auto c = static_cast<short>(PairNumber(attr));
+    RETURN_RESULT(mvwchgat(CHECK_GET(), yx.y, yx.x, n, a, c, nullptr));
+}
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,
