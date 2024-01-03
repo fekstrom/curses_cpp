@@ -23,7 +23,11 @@
 
 #include <curses.h>
 
+#include <type_traits>
+
 using namespace curses;
+
+static_assert(std::is_same_v<std::underlying_type_t<Result>, decltype(ERR)>);
 
 static_assert(Result::Ok == Result::Ok);
 static_assert(Result::Err == Result::Err);
