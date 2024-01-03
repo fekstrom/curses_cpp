@@ -1,0 +1,21 @@
+if(TARGET CursesCpp::CursesCpp)
+  return()
+endif()
+
+function(CursesCpp_message)
+  if(NOT CursesCpp_FIND_QUIETLY)
+    message(${ARGN})
+  endif()
+endfunction()
+
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+set(CURSES_NEED_NCURSES ON)
+find_dependency(Curses)
+
+include(${CMAKE_CURRENT_LIST_DIR}/CursesCppExport.cmake)
+
+check_required_components(CursesCpp)
+
+CursesCpp_message(STATUS "Found CursesCpp: ${CMAKE_CURRENT_LIST_DIR}")

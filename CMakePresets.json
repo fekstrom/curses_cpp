@@ -1,0 +1,43 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "dev",
+            "displayName": "Dev",
+            "description": "Default configuarion for development",
+            "binaryDir": "${sourceDir}/build",
+            "installDir": "${sourceDir}/install",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CURSES_CPP_BUILD_DOCUMENTATION": "ON",
+                "CURSES_CPP_BUILD_UNIT_TESTS": "ON",
+                "CURSES_CPP_FORCE_ENABLE_ASSERTS": "ON"
+            }
+        },
+        {
+            "name": "sanitizer-tests",
+            "displayName": "Sanitizer tests",
+            "description": "Build unit tests with sanitizers",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -O3",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CURSES_CPP_BUILD_UNIT_TESTS": "ON"
+            }
+        },
+        {
+            "name": "static-checks",
+            "displayName": "Static checks",
+            "description": "Static checks with clang-tidy",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_CLANG_TIDY": "clang-tidy-12;-header-filter=${sourceDir}/src/",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CURSES_CPP_BUILD_UNIT_TESTS": "ON"
+            }
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+/// @mainpage CursesCpp
+///
+/// Welcome to the CursesCpp API documentation.
+
+/// CursesCpp is contained in the `curses` namespace.
+namespace curses {}
+
+/// @file curses.hpp
