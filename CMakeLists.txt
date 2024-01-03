@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.21)
 
 project(CursesCpp VERSION 0.0.1)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+if(PROJECT_IS_TOP_LEVEL)
   enable_testing()
 endif()
 
@@ -15,10 +15,15 @@ include(CursesCppForceEnableAsserts)
 include(CursesCppOutputDirectories)
 
 option(CURSES_CPP_BUILD_DOCUMENTATION "Build documentation" OFF)
+option(CURSES_CPP_BUILD_EXAMPLES "Build examples as part of main build" OFF)
 option(CURSES_CPP_BUILD_UNIT_TESTS "Build unit tests" OFF)
 
 if(CURSES_CPP_BUILD_DOCUMENTATION)
   add_subdirectory(docs)
+endif()
+
+if(CURSES_CPP_BUILD_EXAMPLES)
+  add_subdirectory(examples)
 endif()
 
 set(CURSES_NEED_NCURSES ON)
