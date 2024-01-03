@@ -28,17 +28,20 @@
 
 using namespace curses;
 
-TEST_CASE("curs_insstr")
+TEST_CASE("Instr")
 {
+    const auto str = std::string{"001122"};
+
     const auto _ = Initscr();
     auto window = Window({}, {});
 
-    window.Addstr({0, 0}, "ABCD");
+    window.Addstr({0, 0}, str);
+    const auto str0 = window.Instr({0, 0});
+    const auto str1 = window.Instr();
 
-    window.Insstr({0, 2}, "xyz");
-    CHECK(window.Instr({0, 0}, 7) == "ABxyzCD");
+    REQUIRE(str.size() <= str0.size());
+    REQUIRE(std::equal(str.begin(), str.end(), str0.begin()));
 
-    window.Move({0, 2});
-    window.Insstr("12");
-    CHECK(window.Instr({0, 0}, 9) == "AB12xyzCD");
+    REQUIRE(str.size() <= str1.size());
+    REQUIRE(std::equal(str.begin(), str.end(), str1.begin()));
 }

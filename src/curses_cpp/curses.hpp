@@ -495,6 +495,11 @@ public:
     std::basic_string<Chtype> Inchstr(int maxlen = 1024);
     std::basic_string<Chtype> Inchstr(PosYx yx, int maxlen = 1024);
 
+    // curs_instr
+
+    std::string Instr(int maxlen = 1024);
+    std::string Instr(PosYx yx, int maxlen = 1024);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

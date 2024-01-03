@@ -451,6 +451,22 @@ std::basic_string<Chtype> Window::Inchstr(PosYx yx, int maxlen)
     return std::move(buf).Str();
 }
 
+std::string Window::Instr(int n)
+{
+    auto buf = StringBuffer<1024>{n};
+    const auto res = winnstr(CHECK_GET(), buf.Data(), n);
+    if (res == ERR) return "";
+    return std::move(buf).Str();
+}
+
+std::string Window::Instr(PosYx yx, int n)
+{
+    auto buf = StringBuffer<1024>{n};
+    const auto res = mvwinnstr(CHECK_GET(), yx.y, yx.x, buf.Data(), n);
+    if (res == ERR) return "";
+    return std::move(buf).Str();
+}
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,
