@@ -8,6 +8,7 @@ target_sources(unit_tests PRIVATE
   test_type_color.cpp
   test_type_key.cpp
   test_type_result.cpp
+  test_type_window.cpp
 )
 target_link_libraries(unit_tests PRIVATE
   CursesCpp::CompilerWarnings

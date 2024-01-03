@@ -26,6 +26,8 @@
 #include <type_traits>
 #include <utility>
 
+using WINDOW = struct _win_st; // NOLINT: Needed for Window::Get
+
 namespace curses
 {
 
@@ -220,6 +222,56 @@ bool Isendwin();
 
 int Lines();
 int Cols();
+
+class Window
+{
+public:
+    friend void swap(Window& a, Window& b); // NOLINT: lower_case
+
+    Window() = default;
+    Window(const Window& other);
+    Window& operator=(const Window& other);
+    Window(Window&& other) noexcept;
+    Window& operator=(Window&& other) noexcept;
+    ~Window();
+
+    explicit Window(SizeLinesCols lines_cols, PosYx top_left = {});
+
+    bool IsEmpty() const { return window_ == nullptr; }
+    explicit operator bool() const { return !IsEmpty(); }
+
+    const WINDOW* Get() const { return window_; }
+    WINDOW* Get() { return window_; }
+
+    const Window* GetParent() const { return parent_; }
+    Window* GetParent() { return parent_; }
+
+private:
+    WINDOW* window_ = nullptr;
+    Window* parent_ = nullptr;
+};
+
+// Window implementation
+
+inline void swap(Window& a, Window& b)
+{
+    using std::swap;
+    swap(a.window_, b.window_);
+    swap(a.parent_, b.parent_);
+}
+
+inline Window::Window(Window&& other) noexcept :
+    window_{other.window_}
+{
+    other.window_ = nullptr;
+}
+
+inline Window& Window::operator=(Window&& other) noexcept
+{
+    auto tmp = std::move(other);
+    swap(*this, tmp);
+    return *this;
+}
 
 namespace Key
 {

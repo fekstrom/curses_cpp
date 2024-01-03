@@ -23,6 +23,8 @@
 
 #include <curses.h>
 
+#include <stdexcept>
+
 namespace curses
 {
 
@@ -78,6 +80,44 @@ int Lines()
 int Cols()
 {
     return COLS;
+}
+
+Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
+    window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
+{
+    if (!window_)
+    {
+        throw std::runtime_error{"newwin failed"};
+    }
+}
+
+Window::Window(const Window& other) :
+    window_{dupwin(static_cast<WINDOW*>(other.window_))},
+    parent_{other.parent_}
+{
+    if ((window_ == nullptr) != (other.window_ == nullptr))
+    {
+        throw std::runtime_error{"dupwin failed"};
+    }
+}
+
+Window& Window::operator=(const Window& other)
+{
+    auto tmp = other;
+    swap(*this, tmp);
+    return *this;
+}
+
+Window::~Window()
+{
+    if (window_ == nullptr) return;
+    assert(window_ != curscr);
+    assert(window_ != newscr);
+    assert(window_ != stdscr);
+    const auto res = delwin(window_);
+    // delwin returns ERR if this is the parent of another window, see
+    // https://invisible-island.net/ncurses/man/curs_window.3x.html
+    assert((res != ERR) && "delwin error (possibly because a subwindow is still alive)");
 }
 
 } // namespace curses
