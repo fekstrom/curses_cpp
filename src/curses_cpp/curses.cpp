@@ -171,6 +171,14 @@ Result Window::Nodelay(bool enable) { RETURN_RESULT(nodelay(CHECK_GET(), enable)
 Result Window::Notimeout(bool enable) { RETURN_RESULT(notimeout(CHECK_GET(), enable)); }
 void Window::Timeout(int delay_ms) { wtimeout(CHECK_GET(), delay_ms); }
 
+Result Window::Clearok(bool enable) { RETURN_RESULT(clearok(CHECK_GET(), enable)); }
+Result Window::Idlok(bool enable) { RETURN_RESULT(idlok(CHECK_GET(), enable)); }
+void Window::Idcok(bool enable) { idcok(CHECK_GET(), enable); }
+void Window::Immedok(bool enable) { immedok(CHECK_GET(), enable); }
+Result Window::Leaveok(bool enable) { RETURN_RESULT(leaveok(CHECK_GET(), enable)); }
+Result Window::Scrollok(bool enable) { RETURN_RESULT(scrollok(CHECK_GET(), enable)); }
+Result Window::Setscrreg(int top, int bot) { RETURN_RESULT(wsetscrreg(CHECK_GET(), top, bot)); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

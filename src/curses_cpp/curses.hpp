@@ -306,6 +306,16 @@ public:
     Result Notimeout(bool enable = true);
     void Timeout(int delay_ms);
 
+    // curs_outopts
+
+    Result Clearok(bool enable = true);
+    Result Idlok(bool enable = true);
+    void Idcok(bool enable = true);
+    void Immedok(bool enable = true);
+    Result Leaveok(bool enable = true);
+    Result Scrollok(bool enable = true);
+    Result Setscrreg(int top, int bot);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
