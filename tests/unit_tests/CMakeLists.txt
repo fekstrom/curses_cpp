@@ -11,6 +11,7 @@ target_sources(unit_tests PRIVATE
   test_curs_getyx.cpp
   test_curs_initscr.cpp
   test_curs_inopts.cpp
+  test_curs_insch.cpp
   test_curs_move.cpp
   test_curs_opaque.cpp
   test_curs_outopts.cpp

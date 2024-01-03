@@ -413,6 +413,9 @@ Result Window::Addstr(PosYx yx, std::string_view str)
     RETURN_RESULT(mvwaddnstr(CHECK_GET(), yx.y, yx.x, str.data(), ISize(str)));
 }
 
+Result Window::Insch(Chtype ch) { RETURN_RESULT(winsch(CHECK_GET(), ch.Get())); }
+Result Window::Insch(PosYx yx, Chtype ch) { RETURN_RESULT(mvwinsch(CHECK_GET(), yx.y, yx.x, ch.Get())); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,
