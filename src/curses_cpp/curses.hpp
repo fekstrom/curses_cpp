@@ -427,6 +427,10 @@ public:
     Result Vline(Chtype ch, int n);
     Result Vline(PosYx yx, Chtype ch, int n);
 
+    // curs_move
+
+    Result Move(PosYx yx);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

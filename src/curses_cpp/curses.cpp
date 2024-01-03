@@ -268,6 +268,8 @@ Result Window::Hline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwhline(CHECK_
 Result Window::Vline(Chtype ch, int n) { RETURN_RESULT(wvline(CHECK_GET(), ch.Get(), n)); }
 Result Window::Vline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwvline(CHECK_GET(), yx.y, yx.x, ch.Get(), n)); }
 
+Result Window::Move(PosYx yx) { RETURN_RESULT(wmove(CHECK_GET(), yx.y, yx.x)); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,
