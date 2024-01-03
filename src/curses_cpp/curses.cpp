@@ -148,6 +148,11 @@ Result Meta(bool enable)
     RETURN_RESULT(meta(nullptr, enable));
 }
 
+CursorVisibility CursSet(CursorVisibility vis)
+{
+    return static_cast<CursorVisibility>(curs_set(static_cast<int>(vis)));
+}
+
 bool HasColors() { return has_colors(); }
 bool CanChangeColor() { return can_change_color(); }
 Result StartColor() { RETURN_RESULT(start_color()); }

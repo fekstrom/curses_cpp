@@ -65,6 +65,20 @@ enum class Color : int
 // switch statements over the return value of Getch.
 namespace Key {} // NOLINT: CamelCase
 
+enum class CursorVisibility : int
+{
+    Err = -1,
+    Invisible = 0,
+    Normal = 1,
+    VeryVisible = 2,
+};
+
+constexpr bool operator==(CursorVisibility a, Result b) { return a == CursorVisibility::Err && b == Result::Err; }
+constexpr bool operator!=(CursorVisibility a, Result b) { return !(a == b); }
+
+constexpr bool operator==(Result a, CursorVisibility b) { return b == a; }
+constexpr bool operator!=(Result a, CursorVisibility b) { return !(a == b); }
+
 namespace detail
 {
 
@@ -297,6 +311,10 @@ Result Halfdelay(int tenths);
 Result Typeahead(int fd);
 
 Result Meta(bool enable = true);
+
+// curs_kernel
+
+CursorVisibility CursSet(CursorVisibility vis);
 
 // curs_color
 
