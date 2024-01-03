@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <type_traits>
+#include <utility>
 
 namespace curses
 {
@@ -193,6 +194,32 @@ constexpr bool operator!=(SizeLinesCols a, SizeLinesCols b)
 {
     return !(a == b);
 }
+
+class AutoEndwin
+{
+public:
+    [[nodiscard]] AutoEndwin() = default;
+    AutoEndwin(const AutoEndwin&) = delete;
+    AutoEndwin& operator=(const AutoEndwin&) = delete;
+    AutoEndwin(AutoEndwin&& other) noexcept;
+    AutoEndwin& operator=(AutoEndwin&& other) noexcept;
+    ~AutoEndwin();  // Call endwin unless released by NoAutoEndwin
+
+    AutoEndwin& NoAutoEndwin() & { released_ = true; return *this; }
+    AutoEndwin&& NoAutoEndwin() && { released_ = true; return std::move(*this); }
+
+private:
+    bool released_ = false;
+};
+
+// curs_initscr
+
+[[nodiscard]] AutoEndwin Initscr();
+Result Endwin();
+bool Isendwin();
+
+int Lines();
+int Cols();
 
 namespace Key
 {

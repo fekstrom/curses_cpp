@@ -26,9 +26,58 @@
 namespace curses
 {
 
-int Dummy()
+AutoEndwin::AutoEndwin(AutoEndwin&& other) noexcept
+    : released_{other.released_}
 {
-    return 0;
+    other.released_ = true;
+}
+
+AutoEndwin& AutoEndwin::operator=(AutoEndwin&& other) noexcept
+{
+    released_ = other.released_;
+    other.released_ = true;
+    return *this;
+}
+
+AutoEndwin::~AutoEndwin()
+{
+    if (released_) return;
+    const auto res = endwin();
+    assert(res != ERR);
+}
+
+AutoEndwin Initscr()
+{
+    auto* window = initscr();
+    // If initscr fails the ncurses exits the program, see
+    // https://invisible-island.net/ncurses/man/curs_initscr.3x.html
+    assert(window);
+    // When keypad is first enabled, ncurses loads the key
+    // definitions needed for HasKey, see
+    // https://invisible-island.net/ncurses/man/curs_inopts.3x.html
+    keypad(window, true);
+    keypad(window, false);
+    return AutoEndwin{};
+}
+
+Result Endwin()
+{
+    return static_cast<Result>(endwin());
+}
+
+bool Isendwin()
+{
+    return isendwin();
+}
+
+int Lines()
+{
+    return LINES;
+}
+
+int Cols()
+{
+    return COLS;
 }
 
 } // namespace curses

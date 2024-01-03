@@ -23,7 +23,23 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("Dummy test case")
+using namespace curses;
+
+TEST_CASE("curs_initscr: Initscr, Endwin, Isendwin")
 {
-    REQUIRE(true);
+    for (int i = 0; i < 3; ++i)
+    {
+        const auto _ = Initscr();
+        REQUIRE(Lines() > 0);
+        REQUIRE(Cols() > 0);
+    }
+    for (int i = 0; i < 3; ++i)
+    {
+        Initscr().NoAutoEndwin();
+        CHECK(Lines() > 0);
+        CHECK(Cols() > 0);
+        const auto res = Endwin();
+        CHECK(res != Result::Err);
+        CHECK(Isendwin());
+    }
 }
