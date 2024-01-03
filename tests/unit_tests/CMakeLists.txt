@@ -4,6 +4,7 @@ add_executable(unit_tests "")
 target_sources(unit_tests PRIVATE
   dummy.cpp
   test_type_attr.cpp
+  test_type_chtype.cpp
   test_type_color.cpp
   test_type_key.cpp
   test_type_result.cpp

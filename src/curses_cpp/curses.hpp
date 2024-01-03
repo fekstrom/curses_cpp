@@ -23,6 +23,7 @@
 #define CURSES_CPP_CURSES_HPP_
 
 #include <cassert>
+#include <type_traits>
 
 namespace curses
 {
@@ -117,6 +118,49 @@ constexpr int PairNumber(Attr attr)
     using namespace detail;
     return static_cast<int>((static_cast<unsigned>(attr) & ColorMask) >> AttrShift);
 }
+
+class Chtype
+{
+public:
+    Chtype() = default;
+
+    constexpr explicit Chtype(unsigned ch) : ch_{ch} {}
+
+    constexpr Chtype(char c, Attr attr = Attr::Normal) : // NOLINT: Allow implicit conversion
+        ch_{static_cast<unsigned>(c) | static_cast<unsigned>(attr)}
+    {
+        assert(c >= 0);
+    }
+
+    constexpr Chtype(char c, Attr attr, int pair_number) :
+        Chtype{c, RemoveColor(attr) | ColorPair(pair_number)}
+    {}
+
+    constexpr unsigned Get() const { return ch_; }
+    constexpr char GetChar() const { return static_cast<char>(ch_ & detail::CharMask); }
+    constexpr Attr GetAttr() const { return static_cast<Attr>(ch_ & detail::AttrMask); }
+    constexpr Attr GetAttrRemoveColor() const { return RemoveColor(GetAttr()); }
+    constexpr Attr GetColorPair() const { return static_cast<Attr>(ch_ & detail::ColorMask); }
+    constexpr int GetPairNumber() const { return PairNumber(GetColorPair()); }
+
+private:
+    unsigned ch_;
+};
+
+static_assert(std::is_standard_layout_v<Chtype>, "for std::string and std::string_view");
+static_assert(std::is_trivial_v<Chtype>, "for std::string and std::string_view");
+
+constexpr bool operator==(Chtype a, Chtype b) { return a.Get() == b.Get(); }
+constexpr bool operator!=(Chtype a, Chtype b) { return !(a == b); }
+
+constexpr Chtype operator|(Chtype ch, Attr attr) { return Chtype{ch.Get() | static_cast<unsigned>(attr)}; }
+constexpr Chtype operator|(Attr attr, Chtype ch) { return ch | attr; }
+
+constexpr Chtype operator^(Chtype ch, Attr attr) { return Chtype{ch.Get() ^ static_cast<unsigned>(attr)}; }
+constexpr Chtype operator^(Attr attr, Chtype ch) { return ch ^ attr; }
+
+constexpr Chtype& operator|=(Chtype& ch, Attr attr) { return ch = ch | attr; }
+constexpr Chtype& operator^=(Chtype& ch, Attr attr) { return ch = ch ^ attr; }
 
 namespace Key
 {
