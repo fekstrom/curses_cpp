@@ -260,6 +260,22 @@ public:
     void Cursyncup();
     void Syncdown();
 
+    // curs_opaque
+
+    bool IsCleared() const;
+    bool IsIdcok() const;
+    bool IsIdlok() const;
+    bool IsImmedok() const;
+    bool IsKeypad() const;
+    bool IsLeaveok() const;
+    bool IsNodelay() const;
+    bool IsNotimeout() const;
+    bool IsPad() const;
+    bool IsScrollok() const;
+    bool IsSubwin() const;
+    bool IsSyncok() const;
+    int Getdelay() const;
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

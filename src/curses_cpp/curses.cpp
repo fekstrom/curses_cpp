@@ -147,20 +147,23 @@ Result Window::Syncok(bool enable)
     return static_cast<Result>(syncok(CHECK_GET(), enable));
 }
 
-void Window::Syncup()
-{
-    wsyncup(CHECK_GET());
-}
+void Window::Syncup() { wsyncup(CHECK_GET()); }
+void Window::Cursyncup() { wcursyncup(CHECK_GET()); }
 
-void Window::Cursyncup()
-{
-    wcursyncup(CHECK_GET());
-}
-
-void Window::Syncdown()
-{
-    wsyncdown(CHECK_GET());
-}
+void Window::Syncdown() { wsyncdown(CHECK_GET()); }
+bool Window::IsCleared() const { return is_cleared(CHECK_GET()); }
+bool Window::IsIdcok() const { return is_idcok(CHECK_GET()); }
+bool Window::IsIdlok() const { return is_idlok(CHECK_GET()); }
+bool Window::IsImmedok() const { return is_immedok(CHECK_GET()); }
+bool Window::IsKeypad() const { return is_keypad(CHECK_GET()); }
+bool Window::IsLeaveok() const { return is_leaveok(CHECK_GET()); }
+bool Window::IsNodelay() const { return is_nodelay(CHECK_GET()); }
+bool Window::IsNotimeout() const { return is_notimeout(CHECK_GET()); }
+bool Window::IsPad() const { return is_pad(CHECK_GET()); }
+bool Window::IsScrollok() const { return is_scrollok(CHECK_GET()); }
+bool Window::IsSubwin() const { return is_subwin(CHECK_GET()); }
+bool Window::IsSyncok() const { return is_syncok(CHECK_GET()); }
+int Window::Getdelay() const { return wgetdelay(CHECK_GET()); }
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
