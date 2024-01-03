@@ -19,39 +19,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-#ifndef CURSES_CPP_CURSES_HPP_
-#define CURSES_CPP_CURSES_HPP_
+#include "curses_cpp/curses.hpp"
 
-namespace curses
-{
+#include <curses.h>
 
-enum class Result : int
-{
-    Err = -1,
-    Ok  =  0,
-};
+using namespace curses;
 
-constexpr bool operator==(Result a, Result b) { return static_cast<int>(a) == static_cast<int>(b); }
-constexpr bool operator!=(Result a, Result b) { return !(a == b); }
-
-constexpr bool operator==(Result a, int b) { return static_cast<int>(a) == b; }
-constexpr bool operator!=(Result a, int b) { return !(a == b); }
-
-constexpr bool operator==(int a, Result b) { return a == static_cast<int>(b); }
-constexpr bool operator!=(int a, Result b) { return !(a == b); }
-
-enum class Color : int
-{
-    Black   = 0,
-    Red     = 1,
-    Green   = 2,
-    Yellow  = 3,
-    Blue    = 4,
-    Magenta = 5,
-    Cyan    = 6,
-    White   = 7,
-};
-
-} // namespace curses
-
-#endif // Include guard
+static_assert(static_cast<int>(Color::Black)   == COLOR_BLACK);
+static_assert(static_cast<int>(Color::Red)     == COLOR_RED);
+static_assert(static_cast<int>(Color::Green)   == COLOR_GREEN);
+static_assert(static_cast<int>(Color::Yellow)  == COLOR_YELLOW);
+static_assert(static_cast<int>(Color::Blue)    == COLOR_BLUE);
+static_assert(static_cast<int>(Color::Magenta) == COLOR_MAGENTA);
+static_assert(static_cast<int>(Color::Cyan)    == COLOR_CYAN);
+static_assert(static_cast<int>(Color::White)   == COLOR_WHITE);
