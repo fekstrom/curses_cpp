@@ -475,6 +475,11 @@ public:
     Result Insch(Chtype ch);
     Result Insch(PosYx yx, Chtype ch);
 
+    // curs_insstr
+
+    Result Insstr(std::string_view str);
+    Result Insstr(PosYx yx, std::string_view str);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
