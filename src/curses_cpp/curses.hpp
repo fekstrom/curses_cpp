@@ -198,6 +198,40 @@ constexpr bool operator!=(SizeLinesCols a, SizeLinesCols b)
     return !(a == b);
 }
 
+struct ColorPairFgBg
+{
+    Color fg = Color::Black;
+    Color bg = Color::Black;
+};
+
+constexpr bool operator==(ColorPairFgBg a, ColorPairFgBg b)
+{
+    return a.fg == b.fg && a.bg == b.bg;
+}
+
+constexpr bool operator!=(ColorPairFgBg a, ColorPairFgBg b)
+{
+    return !(a == b);
+}
+
+struct ColorRgb
+{
+    // Valid range: 0..1000
+    int r = 0;
+    int g = 0;
+    int b = 0;
+};
+
+constexpr bool operator==(ColorRgb a, ColorRgb b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b;
+}
+
+constexpr bool operator!=(ColorRgb a, ColorRgb b)
+{
+    return !(a == b);
+}
+
 class AutoEndwin
 {
 public:
@@ -246,6 +280,22 @@ Result Halfdelay(int tenths);
 Result Typeahead(int fd);
 
 Result Meta(bool enable = true);
+
+// curs_color
+
+bool HasColors();
+bool CanChangeColor();
+
+Result StartColor();
+
+int Colors();
+int ColorPairs();
+
+Result InitPair(int pair_number, ColorPairFgBg fg_bg);
+ColorPairFgBg PairContent(int pair_number);
+
+Result InitColor(Color color, ColorRgb rgb);
+ColorRgb ColorContent(Color color);
 
 class Window
 {

@@ -89,6 +89,48 @@ Result Meta(bool enable)
     RETURN_RESULT(meta(nullptr, enable));
 }
 
+bool HasColors() { return has_colors(); }
+bool CanChangeColor() { return can_change_color(); }
+Result StartColor() { RETURN_RESULT(start_color()); }
+int Colors() { return COLORS; }
+int ColorPairs() { return COLOR_PAIRS; }
+
+Result InitPair(int pair_number, ColorPairFgBg fg_bg)
+{
+    const auto res = init_pair(
+            static_cast<short>(pair_number),
+            static_cast<short>(fg_bg.fg),
+            static_cast<short>(fg_bg.bg));
+    RETURN_RESULT(res);
+}
+
+ColorPairFgBg PairContent(int pair_number)
+{
+    short fg = 0;
+    short bg = 0;
+    pair_content(static_cast<short>(pair_number), &fg, &bg);
+    return {static_cast<Color>(fg), static_cast<Color>(bg)};
+}
+
+Result InitColor(Color color, ColorRgb rgb)
+{
+    const auto res = init_color(
+            static_cast<short>(color),
+            static_cast<short>(rgb.r),
+            static_cast<short>(rgb.g),
+            static_cast<short>(rgb.b));
+    RETURN_RESULT(res);
+}
+
+ColorRgb ColorContent(Color color)
+{
+    short r = 0;
+    short g = 0;
+    short b = 0;
+    color_content(static_cast<short>(color), &r, &g, &b);
+    return {r, g, b};
+}
+
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
 {

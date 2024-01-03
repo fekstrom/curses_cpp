@@ -30,8 +30,6 @@ TEST_CASE("Attron, Attroff, Attrset, Colorset, Attrget")
     const auto _ = Initscr();
     auto window = Window({}, {});
 
-//  TODO: Need StartColor
-//    REQUIRE(StartColor() == Result::Ok);
 
     REQUIRE(window.Attrget() == Attr::Normal);
     REQUIRE(window.Attron(Attr::Blink) == Result::Ok);
@@ -48,9 +46,9 @@ TEST_CASE("Attron, Attroff, Attrset, Colorset, Attrget")
     REQUIRE(window.Attrset(Attr::Reverse | ColorPair(5)) == Result::Ok);
     REQUIRE(window.Attrget() == (Attr::Reverse | ColorPair(5)));
 
-//  TODO: Need StartColor
-//    REQUIRE(window.Colorset(2) == Result::Ok);
-//    REQUIRE(window.Attrget() == (Attr::Reverse | ColorPair(2)));
+    if (StartColor() == Result::Err) return;
+    REQUIRE(window.Colorset(2) == Result::Ok);
+    REQUIRE(window.Attrget() == (Attr::Reverse | ColorPair(2)));
 }
 
 TEST_CASE("Chgat")
