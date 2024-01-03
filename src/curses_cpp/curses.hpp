@@ -490,6 +490,11 @@ public:
     Chtype Inch();
     Chtype Inch(PosYx yx);
 
+    // curs_inchstr
+
+    std::basic_string<Chtype> Inchstr(int maxlen = 1024);
+    std::basic_string<Chtype> Inchstr(PosYx yx, int maxlen = 1024);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

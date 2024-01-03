@@ -44,9 +44,10 @@ static int ISize(Sized&& sized)
 namespace
 {
 
-template<int StackBufStrCap>
+template<int StackBufStrCap, typename CharType = char>
 class StringBuffer
 {
+    static_assert(std::is_same_v<CharType, char> || std::is_same_v<CharType, Chtype>);
 public:
     // Create a buffer with capacity for str_cap characters + trailing null
     explicit StringBuffer(int str_cap) :
@@ -60,21 +61,21 @@ public:
     }
 
     // Return a pointer to the buffer
-    char* Data() { return data_; }
+    CharType* Data() { return data_; }
 
     // After a null-terminated string has been written to Data(), extract it.
-    std::string Str() &&
+    std::basic_string<CharType> Str() &&
     {
         const auto using_buf = (data_ == buf_.data());
         if (using_buf)
         {
-            auto* e = std::find(buf_.begin(), buf_.end(), '\0');
+            auto* e = std::find(buf_.begin(), buf_.end(), CharType{'\0'});
             assert(e != buf_.end());
             str_.assign(buf_.begin(), e);
         }
         else
         {
-            auto e = std::find(str_.begin(), str_.end(), '\0');
+            auto e = std::find(str_.begin(), str_.end(), CharType{'\0'});
             assert(e != str_.end());
             str_.resize(e - str_.begin());
         }
@@ -82,9 +83,9 @@ public:
     }
 
 private:
-    char* data_;
-    std::string str_;
-    std::array<char, StackBufStrCap + 1> buf_;  // + 1 for trailing null
+    CharType* data_;
+    std::basic_string<CharType> str_;
+    std::array<CharType, StackBufStrCap + 1> buf_;  // + 1 for trailing null
 };
 
 } // namespace
@@ -431,6 +432,24 @@ Result Window::Delch(PosYx yx) { RETURN_RESULT(mvwdelch(CHECK_GET(), yx.y, yx.x)
 
 Chtype Window::Inch() { return Chtype{winch(CHECK_GET())}; }
 Chtype Window::Inch(PosYx yx) { return Chtype{mvwinch(CHECK_GET(), yx.y, yx.x)}; }
+
+std::basic_string<Chtype> Window::Inchstr(int maxlen)
+{
+    static_assert(sizeof(Chtype) == sizeof(unsigned), "no padding in Chtype");
+    auto buf = StringBuffer<1024, Chtype>{maxlen};
+    const auto res = winchnstr(CHECK_GET(), reinterpret_cast<chtype*>(buf.Data()), maxlen);
+    if (res == ERR) return {};
+    return std::move(buf).Str();
+}
+
+std::basic_string<Chtype> Window::Inchstr(PosYx yx, int maxlen)
+{
+    static_assert(sizeof(Chtype) == sizeof(unsigned), "no padding in Chtype");
+    auto buf = StringBuffer<1024, Chtype>{maxlen};
+    const auto res = mvwinchnstr(CHECK_GET(), yx.y, yx.x, reinterpret_cast<chtype*>(buf.Data()), maxlen);
+    if (res == ERR) return {};
+    return std::move(buf).Str();
+}
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
