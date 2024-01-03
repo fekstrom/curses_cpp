@@ -133,6 +133,9 @@ ColorRgb ColorContent(Color color)
 
 Result Doupdate() { RETURN_RESULT(doupdate()); }
 
+Result Ungetch(int ch) { RETURN_RESULT(ungetch(ch)); }
+bool HasKey(int ch) { return static_cast<bool>(has_key(ch)); }
+
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
 {
@@ -297,6 +300,9 @@ PosYx Window::Getmaxyx()
     getmaxyx(CHECK_GET(), ret.y, ret.x);
     return ret;
 }
+
+int Window::Getch() { return wgetch(CHECK_GET()); }
+int Window::Getch(PosYx yx) { return mvwgetch(CHECK_GET(), yx.y, yx.x); }
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,

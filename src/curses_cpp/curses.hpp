@@ -317,6 +317,11 @@ ColorRgb ColorContent(Color color);
 
 Result Doupdate();
 
+// curs_getch
+
+Result Ungetch(int ch);
+bool HasKey(int ch);
+
 class Window
 {
 public:
@@ -437,6 +442,11 @@ public:
     PosYx Getparyx();
     PosYx Getbegyx();
     PosYx Getmaxyx();
+
+    // curs_getch
+
+    int Getch();
+    int Getch(PosYx yx);
 
 private:
     Window SubwinImpl(
