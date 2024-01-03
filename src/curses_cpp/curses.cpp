@@ -429,6 +429,9 @@ Result Window::Insstr(PosYx yx, std::string_view str)
 Result Window::Delch() { RETURN_RESULT(wdelch(CHECK_GET())); }
 Result Window::Delch(PosYx yx) { RETURN_RESULT(mvwdelch(CHECK_GET(), yx.y, yx.x)); }
 
+Chtype Window::Inch() { return Chtype{winch(CHECK_GET())}; }
+Chtype Window::Inch(PosYx yx) { return Chtype{mvwinch(CHECK_GET(), yx.y, yx.x)}; }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

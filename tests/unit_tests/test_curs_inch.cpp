@@ -25,33 +25,25 @@
 
 using namespace curses;
 
-TEST_CASE("curs_insch")
+TEST_CASE("Inch")
 {
+    const auto a = 'A';
+    const auto b = 'B' | Attr::Reverse;
+    const auto c = 'C' | ColorPair(2);
+
     const auto _ = Initscr();
+    StartColor();
     auto window = Window({}, {});
 
-    const auto a = 'A' | Attr::Reverse;
-    const auto b = 'B' | Attr::Dim;
-    const auto c = 'C' | Attr::Bold;
-    const auto d = 'D' | Attr::Blink;
+    window.Addch({0, 0}, a);
+    REQUIRE(window.Inch({0, 0}) == a);
+    window.Addch({0, 1}, b);
+    REQUIRE(window.Inch({0, 1}) == b);
+    window.Addch({0, 2}, c);
+    REQUIRE(window.Inch({0, 2}) == c);
 
     window.Addch({0, 0}, a);
-    window.Addch({0, 1}, b);
-
-    REQUIRE(window.Inch({0, 0}) == a);
-    REQUIRE(window.Inch({0, 1}) == b);
-
-    window.Insch({0, 0}, c);
-
-    REQUIRE(window.Inch({0, 0}) == c);
-    REQUIRE(window.Inch({0, 1}) == a);
-    REQUIRE(window.Inch({0, 2}) == b);
-
-    window.Move({0, 1});
-    window.Insch(d);
-
-    REQUIRE(window.Inch({0, 0}) == c);
-    REQUIRE(window.Inch({0, 1}) == d);
-    REQUIRE(window.Inch({0, 2}) == a);
-    REQUIRE(window.Inch({0, 3}) == b);
+    REQUIRE(window.Inch() == b);
+    window.Addch(b);
+    REQUIRE(window.Inch() == c);
 }

@@ -9,6 +9,7 @@ target_sources(unit_tests PRIVATE
   test_curs_color.cpp
   test_curs_getch.cpp
   test_curs_getyx.cpp
+  test_curs_inch.cpp
   test_curs_initscr.cpp
   test_curs_inopts.cpp
   test_curs_insch.cpp

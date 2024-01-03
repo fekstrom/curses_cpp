@@ -485,6 +485,11 @@ public:
     Result Delch();
     Result Delch(PosYx yx);
 
+    // curs_inch
+
+    Chtype Inch();
+    Chtype Inch(PosYx yx);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
