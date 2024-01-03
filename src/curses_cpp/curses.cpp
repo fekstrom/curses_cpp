@@ -255,6 +255,19 @@ Result Window::Noutrefresh() { RETURN_RESULT(wnoutrefresh(CHECK_GET())); }
 Result Window::Redrawwin() { RETURN_RESULT(redrawwin(CHECK_GET())); }
 Result Window::Redrawln(int beg_line, int num_lines) { RETURN_RESULT(wredrawln(CHECK_GET(), beg_line, num_lines)); }
 
+Result Window::Border(const BorderSides& sides, const BorderCorners& corners)
+{
+    const auto res = wborder(CHECK_GET(),
+            sides.l.Get(), sides.r.Get(), sides.t.Get(), sides.b.Get(),
+            corners.tl.Get(), corners.tr.Get(), corners.bl.Get(), corners.br.Get());
+    RETURN_RESULT(res);
+}
+
+Result Window::Hline(Chtype ch, int n) { RETURN_RESULT(whline(CHECK_GET(), ch.Get(), n)); }
+Result Window::Hline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwhline(CHECK_GET(), yx.y, yx.x, ch.Get(), n)); }
+Result Window::Vline(Chtype ch, int n) { RETURN_RESULT(wvline(CHECK_GET(), ch.Get(), n)); }
+Result Window::Vline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwvline(CHECK_GET(), yx.y, yx.x, ch.Get(), n)); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

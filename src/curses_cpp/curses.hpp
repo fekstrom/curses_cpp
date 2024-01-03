@@ -232,6 +232,22 @@ constexpr bool operator!=(ColorRgb a, ColorRgb b)
     return !(a == b);
 }
 
+struct BorderSides
+{
+    Chtype l = 0;
+    Chtype r = 0;
+    Chtype t = 0;
+    Chtype b = 0;
+};
+
+struct BorderCorners
+{
+    Chtype tl = 0;
+    Chtype tr = 0;
+    Chtype bl = 0;
+    Chtype br = 0;
+};
+
 class AutoEndwin
 {
 public:
@@ -398,6 +414,18 @@ public:
 
     Result Redrawwin();
     Result Redrawln(int beg_line, int num_lines);
+
+    // curs_border
+
+    Result Border(const BorderSides& sides, const BorderCorners& corners = {});
+    Result Box(Chtype verch, Chtype horch) { return Border({verch, verch, horch, horch}); }
+    Result Box(const BorderSides& sides = {}) { return Border(sides); }
+
+    Result Hline(Chtype ch, int n);
+    Result Hline(PosYx yx, Chtype ch, int n);
+
+    Result Vline(Chtype ch, int n);
+    Result Vline(PosYx yx, Chtype ch, int n);
 
 private:
     Window SubwinImpl(
