@@ -3,6 +3,7 @@ find_package(Catch2 3 REQUIRED)
 add_executable(unit_tests "")
 target_sources(unit_tests PRIVATE
   dummy.cpp
+  test_type_attr.cpp
   test_type_color.cpp
   test_type_result.cpp
 )

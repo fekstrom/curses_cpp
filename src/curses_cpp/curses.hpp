@@ -22,6 +22,8 @@
 #ifndef CURSES_CPP_CURSES_HPP_
 #define CURSES_CPP_CURSES_HPP_
 
+#include <cassert>
+
 namespace curses
 {
 
@@ -51,6 +53,65 @@ enum class Color : int
     Cyan    = 6,
     White   = 7,
 };
+
+namespace detail
+{
+
+constexpr unsigned CharMask     = 0xFF;
+constexpr unsigned AttrShift    = 8;
+constexpr unsigned AttrMask     = ~CharMask;
+constexpr unsigned ColorMask    = 0xFF00;
+
+} // namespace detail
+
+enum class Attr : unsigned
+{
+    Normal      = 0U,
+    Standout    = 1U << ( 8 + detail::AttrShift),
+    Underline   = 1U << ( 9 + detail::AttrShift),
+    Reverse     = 1U << (10 + detail::AttrShift),
+    Blink       = 1U << (11 + detail::AttrShift),
+    Dim         = 1U << (12 + detail::AttrShift),
+    Bold        = 1U << (13 + detail::AttrShift),
+    Altcharset  = 1U << (14 + detail::AttrShift),
+    Invis       = 1U << (15 + detail::AttrShift),
+    Protect     = 1U << (16 + detail::AttrShift),
+    Horizontal  = 1U << (17 + detail::AttrShift),
+    Left        = 1U << (18 + detail::AttrShift),
+    Low         = 1U << (19 + detail::AttrShift),
+    Right       = 1U << (20 + detail::AttrShift),
+    Top         = 1U << (21 + detail::AttrShift),
+    Vertical    = 1U << (22 + detail::AttrShift),
+};
+
+constexpr bool operator==(Attr a, Attr b) { return static_cast<unsigned>(a) == static_cast<unsigned>(b); }
+constexpr bool operator!=(Attr a, Attr b) { return !(a == b); }
+
+constexpr Attr operator|(Attr a, Attr b) { return static_cast<Attr>(static_cast<unsigned>(a) | static_cast<unsigned>(b)); }
+constexpr Attr operator&(Attr a, Attr b) { return static_cast<Attr>(static_cast<unsigned>(a) & static_cast<unsigned>(b)); }
+constexpr Attr operator^(Attr a, Attr b) { return static_cast<Attr>(static_cast<unsigned>(a) ^ static_cast<unsigned>(b)); }
+
+constexpr Attr& operator|=(Attr& a, Attr b) { return a = a | b; }
+constexpr Attr& operator&=(Attr& a, Attr b) { return a = a & b; }
+constexpr Attr& operator^=(Attr& a, Attr b) { return a = a ^ b; }
+
+constexpr Attr RemoveColor(Attr attr)
+{
+    return attr & static_cast<Attr>(~detail::ColorMask);
+}
+
+constexpr Attr ColorPair(int pair_number)
+{
+    using namespace detail;
+    assert(0 <= pair_number && pair_number < 256);
+    return static_cast<Attr>((pair_number << AttrShift) & ColorMask);
+}
+
+constexpr int PairNumber(Attr attr)
+{
+    using namespace detail;
+    return static_cast<int>((static_cast<unsigned>(attr) & ColorMask) >> AttrShift);
+}
 
 } // namespace curses
 
