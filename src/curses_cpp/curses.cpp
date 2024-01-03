@@ -382,6 +382,27 @@ Result Window::Addch(Chtype ch) { RETURN_RESULT(waddch(CHECK_GET(), ch.Get())); 
 Result Window::Addch(PosYx yx, Chtype ch) { RETURN_RESULT(mvwaddch(CHECK_GET(), yx.y, yx.x, ch.Get())); }
 Result Window::Echochar(Chtype ch) { RETURN_RESULT(wechochar(CHECK_GET(), ch.Get())); }
 
+Result Window::Addchstr(std::basic_string_view<Chtype> str)
+{
+    static_assert(sizeof(Chtype) == sizeof(unsigned), "no padding in Chtype");
+    const auto res = waddchnstr(
+            CHECK_GET(),
+            reinterpret_cast<const chtype*>(str.data()),
+            ISize(str));
+    RETURN_RESULT(res);
+}
+
+Result Window::Addchstr(PosYx yx, std::basic_string_view<Chtype> str)
+{
+    static_assert(sizeof(Chtype) == sizeof(unsigned), "no padding in Chtype");
+    const auto res = mvwaddchnstr(
+            CHECK_GET(),
+            yx.y, yx.x,
+            reinterpret_cast<const chtype*>(str.data()),
+            ISize(str));
+    RETURN_RESULT(res);
+}
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

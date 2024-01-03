@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <utility>
 
@@ -458,6 +459,11 @@ public:
     Result Addch(Chtype ch);
     Result Addch(PosYx yx, Chtype ch);
     Result Echochar(Chtype ch);
+
+    // curs_addchstr
+
+    Result Addchstr(std::basic_string_view<Chtype> str);
+    Result Addchstr(PosYx yx, std::basic_string_view<Chtype> str);
 
 private:
     Window SubwinImpl(
