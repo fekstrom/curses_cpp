@@ -224,6 +224,29 @@ bool Isendwin();
 int Lines();
 int Cols();
 
+// curs_inopts
+
+Result Cbreak(bool enable = true);
+Result Nocbreak();
+
+Result Echo(bool enable = true);
+Result Noecho();
+
+Result Nl(bool enable = true);
+Result Nonl();
+
+Result Raw(bool enable = true);
+Result Noraw();
+
+void Qiflush(bool enable = true);
+void Noqiflush();
+
+Result Halfdelay(int tenths);
+
+Result Typeahead(int fd);
+
+Result Meta(bool enable = true);
+
 class Window
 {
 public:
@@ -275,6 +298,13 @@ public:
     bool IsSubwin() const;
     bool IsSyncok() const;
     int Getdelay() const;
+
+    // curs_inopts
+
+    Result Keypad(bool enable = true);
+    Result Nodelay(bool enable = true);
+    Result Notimeout(bool enable = true);
+    void Timeout(int delay_ms);
 
 private:
     Window SubwinImpl(

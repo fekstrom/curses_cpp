@@ -84,6 +84,25 @@ int Cols()
     return COLS;
 }
 
+Result Cbreak(bool enable) { return static_cast<Result>(enable ? cbreak() : nocbreak()); }
+Result Nocbreak() { return static_cast<Result>(nocbreak()); }
+Result Echo(bool enable) { return static_cast<Result>(enable ? echo() : noecho()); }
+Result Noecho() { return static_cast<Result>(noecho()); }
+Result Nl(bool enable) { return static_cast<Result>(enable ? nl() : nonl()); }
+Result Nonl() { return static_cast<Result>(nonl()); }
+Result Raw(bool enable) { return static_cast<Result>(enable ? raw() : noraw()); }
+Result Noraw() { return static_cast<Result>(noraw()); }
+void Qiflush(bool enable) { enable ? qiflush() : noqiflush(); }
+void Noqiflush() { noqiflush(); }
+Result Halfdelay(int tenths) { return static_cast<Result>(halfdelay(tenths)); }
+Result Typeahead(int fd) { return static_cast<Result>(typeahead(fd)); }
+Result Meta(bool enable)
+{
+    // The pointer argument to meta is always ignored, see
+    // https://invisible-island.net/ncurses/man/curs_inopts.3x.html
+    return static_cast<Result>(meta(nullptr, enable));
+}
+
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
 {
@@ -164,6 +183,11 @@ bool Window::IsScrollok() const { return is_scrollok(CHECK_GET()); }
 bool Window::IsSubwin() const { return is_subwin(CHECK_GET()); }
 bool Window::IsSyncok() const { return is_syncok(CHECK_GET()); }
 int Window::Getdelay() const { return wgetdelay(CHECK_GET()); }
+
+Result Window::Keypad(bool enable) { return static_cast<Result>(keypad(CHECK_GET(), enable)); }
+Result Window::Nodelay(bool enable) { return static_cast<Result>(nodelay(CHECK_GET(), enable)); }
+Result Window::Notimeout(bool enable) { return static_cast<Result>(notimeout(CHECK_GET(), enable)); }
+void Window::Timeout(int delay_ms) { wtimeout(CHECK_GET(), delay_ms); }
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
