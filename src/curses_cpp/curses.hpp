@@ -480,6 +480,11 @@ public:
     Result Insstr(std::string_view str);
     Result Insstr(PosYx yx, std::string_view str);
 
+    // curs_delch
+
+    Result Delch();
+    Result Delch(PosYx yx);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
