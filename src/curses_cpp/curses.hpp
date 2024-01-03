@@ -312,6 +312,11 @@ Result Typeahead(int fd);
 
 Result Meta(bool enable = true);
 
+// curs_util
+
+std::string Unctrl(Chtype ch);
+std::string Keyname(int key);
+
 // curs_kernel
 
 CursorVisibility CursSet(CursorVisibility vis);

@@ -148,6 +148,18 @@ Result Meta(bool enable)
     RETURN_RESULT(meta(nullptr, enable));
 }
 
+std::string Unctrl(Chtype ch)
+{
+    const auto* ret = unctrl(ch.Get());
+    return std::string{ret ? ret : "null"};
+}
+
+std::string Keyname(int key)
+{
+    const auto* ret = keyname(key);
+    return std::string{ret ? ret : "null"};
+}
+
 CursorVisibility CursSet(CursorVisibility vis)
 {
     return static_cast<CursorVisibility>(curs_set(static_cast<int>(vis)));
