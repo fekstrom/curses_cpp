@@ -162,6 +162,38 @@ constexpr Chtype operator^(Attr attr, Chtype ch) { return ch ^ attr; }
 constexpr Chtype& operator|=(Chtype& ch, Attr attr) { return ch = ch | attr; }
 constexpr Chtype& operator^=(Chtype& ch, Attr attr) { return ch = ch ^ attr; }
 
+struct PosYx
+{
+    int y = 0;
+    int x = 0;
+};
+
+constexpr bool operator==(PosYx a, PosYx b)
+{
+    return a.y == b.y && a.x == b.x;
+}
+
+constexpr bool operator!=(PosYx a, PosYx b)
+{
+    return !(a == b);
+}
+
+struct SizeLinesCols
+{
+    int lines = 0;
+    int cols = 0;
+};
+
+constexpr bool operator==(SizeLinesCols a, SizeLinesCols b)
+{
+    return a.lines == b.lines && a.cols == b.cols;
+}
+
+constexpr bool operator!=(SizeLinesCols a, SizeLinesCols b)
+{
+    return !(a == b);
+}
+
 namespace Key
 {
 
