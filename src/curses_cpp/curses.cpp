@@ -26,6 +26,7 @@
 #include <stdexcept>
 
 #define CHECK_GET [&] { auto* ret = Get(); assert(ret); return ret; }
+#define RETURN_RESULT(expr) return static_cast<Result>(expr)
 
 namespace curses
 {
@@ -66,7 +67,7 @@ AutoEndwin Initscr()
 
 Result Endwin()
 {
-    return static_cast<Result>(endwin());
+    RETURN_RESULT(endwin());
 }
 
 bool Isendwin()
@@ -84,23 +85,23 @@ int Cols()
     return COLS;
 }
 
-Result Cbreak(bool enable) { return static_cast<Result>(enable ? cbreak() : nocbreak()); }
-Result Nocbreak() { return static_cast<Result>(nocbreak()); }
-Result Echo(bool enable) { return static_cast<Result>(enable ? echo() : noecho()); }
-Result Noecho() { return static_cast<Result>(noecho()); }
-Result Nl(bool enable) { return static_cast<Result>(enable ? nl() : nonl()); }
-Result Nonl() { return static_cast<Result>(nonl()); }
-Result Raw(bool enable) { return static_cast<Result>(enable ? raw() : noraw()); }
-Result Noraw() { return static_cast<Result>(noraw()); }
+Result Cbreak(bool enable) { RETURN_RESULT(enable ? cbreak() : nocbreak()); }
+Result Nocbreak() { RETURN_RESULT(nocbreak()); }
+Result Echo(bool enable) { RETURN_RESULT(enable ? echo() : noecho()); }
+Result Noecho() { RETURN_RESULT(noecho()); }
+Result Nl(bool enable) { RETURN_RESULT(enable ? nl() : nonl()); }
+Result Nonl() { RETURN_RESULT(nonl()); }
+Result Raw(bool enable) { RETURN_RESULT(enable ? raw() : noraw()); }
+Result Noraw() { RETURN_RESULT(noraw()); }
 void Qiflush(bool enable) { enable ? qiflush() : noqiflush(); }
 void Noqiflush() { noqiflush(); }
-Result Halfdelay(int tenths) { return static_cast<Result>(halfdelay(tenths)); }
-Result Typeahead(int fd) { return static_cast<Result>(typeahead(fd)); }
+Result Halfdelay(int tenths) { RETURN_RESULT(halfdelay(tenths)); }
+Result Typeahead(int fd) { RETURN_RESULT(typeahead(fd)); }
 Result Meta(bool enable)
 {
     // The pointer argument to meta is always ignored, see
     // https://invisible-island.net/ncurses/man/curs_inopts.3x.html
-    return static_cast<Result>(meta(nullptr, enable));
+    RETURN_RESULT(meta(nullptr, enable));
 }
 
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
@@ -153,17 +154,17 @@ Window Window::Derwin(SizeLinesCols lines_cols, PosYx top_left_in_parent)
 
 Result Window::Mvwin(PosYx top_left)
 {
-    return static_cast<Result>(mvwin(CHECK_GET(), top_left.y, top_left.x));
+    RETURN_RESULT(mvwin(CHECK_GET(), top_left.y, top_left.x));
 }
 
 Result Window::Mvderwin(PosYx viewed_top_left)
 {
-    return static_cast<Result>(mvderwin(CHECK_GET(), viewed_top_left.y, viewed_top_left.x));
+    RETURN_RESULT(mvderwin(CHECK_GET(), viewed_top_left.y, viewed_top_left.x));
 }
 
 Result Window::Syncok(bool enable)
 {
-    return static_cast<Result>(syncok(CHECK_GET(), enable));
+    RETURN_RESULT(syncok(CHECK_GET(), enable));
 }
 
 void Window::Syncup() { wsyncup(CHECK_GET()); }
@@ -184,9 +185,9 @@ bool Window::IsSubwin() const { return is_subwin(CHECK_GET()); }
 bool Window::IsSyncok() const { return is_syncok(CHECK_GET()); }
 int Window::Getdelay() const { return wgetdelay(CHECK_GET()); }
 
-Result Window::Keypad(bool enable) { return static_cast<Result>(keypad(CHECK_GET(), enable)); }
-Result Window::Nodelay(bool enable) { return static_cast<Result>(nodelay(CHECK_GET(), enable)); }
-Result Window::Notimeout(bool enable) { return static_cast<Result>(notimeout(CHECK_GET(), enable)); }
+Result Window::Keypad(bool enable) { RETURN_RESULT(keypad(CHECK_GET(), enable)); }
+Result Window::Nodelay(bool enable) { RETURN_RESULT(nodelay(CHECK_GET(), enable)); }
+Result Window::Notimeout(bool enable) { RETURN_RESULT(notimeout(CHECK_GET(), enable)); }
 void Window::Timeout(int delay_ms) { wtimeout(CHECK_GET(), delay_ms); }
 
 Window Window::SubwinImpl(
