@@ -25,6 +25,8 @@
 
 #include <stdexcept>
 
+#define CHECK_GET [&] { auto* ret = Get(); assert(ret); return ret; }
+
 namespace curses
 {
 
@@ -118,6 +120,65 @@ Window::~Window()
     // delwin returns ERR if this is the parent of another window, see
     // https://invisible-island.net/ncurses/man/curs_window.3x.html
     assert((res != ERR) && "delwin error (possibly because a subwindow is still alive)");
+}
+
+Window Window::Subwin(SizeLinesCols lines_cols, PosYx top_left_on_screen)
+{
+    return SubwinImpl(lines_cols, top_left_on_screen, "subwin");
+}
+
+Window Window::Derwin(SizeLinesCols lines_cols, PosYx top_left_in_parent)
+{
+    return SubwinImpl(lines_cols, top_left_in_parent, "derwin");
+}
+
+Result Window::Mvwin(PosYx top_left)
+{
+    return static_cast<Result>(mvwin(CHECK_GET(), top_left.y, top_left.x));
+}
+
+Result Window::Mvderwin(PosYx viewed_top_left)
+{
+    return static_cast<Result>(mvderwin(CHECK_GET(), viewed_top_left.y, viewed_top_left.x));
+}
+
+Result Window::Syncok(bool enable)
+{
+    return static_cast<Result>(syncok(CHECK_GET(), enable));
+}
+
+void Window::Syncup()
+{
+    wsyncup(CHECK_GET());
+}
+
+void Window::Cursyncup()
+{
+    wcursyncup(CHECK_GET());
+}
+
+void Window::Syncdown()
+{
+    wsyncdown(CHECK_GET());
+}
+
+Window Window::SubwinImpl(
+        SizeLinesCols lines_cols,
+        PosYx top_left,
+        const std::string& method)
+{
+    const auto [l, c] = lines_cols;
+    const auto [y, x] = top_left;
+    auto* window = static_cast<WINDOW*>(nullptr);
+    if (method == "subwin") window = subwin(CHECK_GET(), l, c, y, x);
+    if (method == "derwin") window = derwin(CHECK_GET(), l, c, y, x);
+    if (method == "subpad") window = subpad(CHECK_GET(), l, c, y, x);
+    if (!window) throw std::runtime_error{method + " failed"};
+    assert(wgetparent(window) == window_);
+    auto ret = Window{};
+    ret.window_ = window;
+    ret.parent_ = this;
+    return ret;
 }
 
 } // namespace curses

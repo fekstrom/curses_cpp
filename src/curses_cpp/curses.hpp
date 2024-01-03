@@ -23,6 +23,7 @@
 #define CURSES_CPP_CURSES_HPP_
 
 #include <cassert>
+#include <string>
 #include <type_traits>
 #include <utility>
 
@@ -246,7 +247,25 @@ public:
     const Window* GetParent() const { return parent_; }
     Window* GetParent() { return parent_; }
 
+    // curs_window
+
+    Window Subwin(SizeLinesCols lines_cols, PosYx top_left_on_screen);
+    Window Derwin(SizeLinesCols lines_cols, PosYx top_left_in_parent);
+
+    Result Mvwin(PosYx top_left);
+    Result Mvderwin(PosYx viewed_top_left);
+
+    Result Syncok(bool enable = true);
+    void Syncup();
+    void Cursyncup();
+    void Syncdown();
+
 private:
+    Window SubwinImpl(
+            SizeLinesCols lines_cols,
+            PosYx top_left,
+            const std::string& method); // subwin, derwin, subpad
+
     WINDOW* window_ = nullptr;
     Window* parent_ = nullptr;
 };
