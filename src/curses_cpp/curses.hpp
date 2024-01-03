@@ -465,6 +465,11 @@ public:
     Result Addchstr(std::basic_string_view<Chtype> str);
     Result Addchstr(PosYx yx, std::basic_string_view<Chtype> str);
 
+    // curs_addstr
+
+    Result Addstr(std::string_view str);
+    Result Addstr(PosYx yx, std::string_view str);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

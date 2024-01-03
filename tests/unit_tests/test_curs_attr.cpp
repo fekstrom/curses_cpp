@@ -30,7 +30,6 @@ TEST_CASE("Attron, Attroff, Attrset, Colorset, Attrget")
     const auto _ = Initscr();
     auto window = Window({}, {});
 
-
     REQUIRE(window.Attrget() == Attr::Normal);
     REQUIRE(window.Attron(Attr::Blink) == Result::Ok);
     REQUIRE(window.Attrget() == Attr::Blink);
@@ -56,11 +55,10 @@ TEST_CASE("Chgat")
     const auto _ = Initscr();
     auto window = Window({}, {});
 
-    // TODO: Need Addstr
-//    window.Addstr({0, 0}, "AAAAAA");
-//    window.Addstr({1, 0}, "BBBBBB");
-//    REQUIRE(window.Chgat({0, 0}, Attr::Reverse) == Result::Ok);
-//    REQUIRE(window.Chgat(Attr::Bold) == Result::Ok);
-//    REQUIRE(window.Chgat({1, 0}, 3, Attr::Dim) == Result::Ok);
-//    REQUIRE(window.Chgat(2, Attr::Underline) == Result::Ok);
+    window.Addstr({0, 0}, "AAAAAA");
+    window.Addstr({1, 0}, "BBBBBB");
+    REQUIRE(window.Chgat({0, 0}, Attr::Reverse) == Result::Ok);
+    REQUIRE(window.Chgat(Attr::Bold) == Result::Ok);
+    REQUIRE(window.Chgat({1, 0}, 3, Attr::Dim) == Result::Ok);
+    REQUIRE(window.Chgat(2, Attr::Underline) == Result::Ok);
 }

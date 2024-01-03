@@ -403,6 +403,16 @@ Result Window::Addchstr(PosYx yx, std::basic_string_view<Chtype> str)
     RETURN_RESULT(res);
 }
 
+Result Window::Addstr(std::string_view str)
+{
+    RETURN_RESULT(waddnstr(CHECK_GET(), str.data(), ISize(str)));
+}
+
+Result Window::Addstr(PosYx yx, std::string_view str)
+{
+    RETURN_RESULT(mvwaddnstr(CHECK_GET(), yx.y, yx.x, str.data(), ISize(str)));
+}
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

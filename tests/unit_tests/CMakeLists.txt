@@ -4,6 +4,7 @@ add_executable(unit_tests "")
 target_sources(unit_tests PRIVATE
   test_curs_addch.cpp
   test_curs_addchstr.cpp
+  test_curs_addstr.cpp
   test_curs_attr.cpp
   test_curs_color.cpp
   test_curs_getch.cpp
