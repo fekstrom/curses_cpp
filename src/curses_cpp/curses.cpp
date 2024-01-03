@@ -378,6 +378,10 @@ std::string Window::Getstr(PosYx yx, int maxlen)
     return std::move(buf).Str();
 }
 
+Result Window::Addch(Chtype ch) { RETURN_RESULT(waddch(CHECK_GET(), ch.Get())); }
+Result Window::Addch(PosYx yx, Chtype ch) { RETURN_RESULT(mvwaddch(CHECK_GET(), yx.y, yx.x, ch.Get())); }
+Result Window::Echochar(Chtype ch) { RETURN_RESULT(wechochar(CHECK_GET(), ch.Get())); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

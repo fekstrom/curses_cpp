@@ -453,6 +453,12 @@ public:
     std::string Getstr(int maxlen = 1024);
     std::string Getstr(PosYx yx, int maxlen = 1024);
 
+    // curs_addch
+
+    Result Addch(Chtype ch);
+    Result Addch(PosYx yx, Chtype ch);
+    Result Echochar(Chtype ch);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
