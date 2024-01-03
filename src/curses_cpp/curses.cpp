@@ -270,6 +270,34 @@ Result Window::Vline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwvline(CHECK_
 
 Result Window::Move(PosYx yx) { RETURN_RESULT(wmove(CHECK_GET(), yx.y, yx.x)); }
 
+PosYx Window::Getyx()
+{
+    auto ret = PosYx{};
+    getyx(CHECK_GET(), ret.y, ret.x);
+    return ret;
+}
+
+PosYx Window::Getparyx()
+{
+    auto ret = PosYx{};
+    getparyx(CHECK_GET(), ret.y, ret.x);
+    return ret;
+}
+
+PosYx Window::Getbegyx()
+{
+    auto ret = PosYx{};
+    getbegyx(CHECK_GET(), ret.y, ret.x);
+    return ret;
+}
+
+PosYx Window::Getmaxyx()
+{
+    auto ret = PosYx{};
+    getmaxyx(CHECK_GET(), ret.y, ret.x);
+    return ret;
+}
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

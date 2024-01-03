@@ -431,6 +431,13 @@ public:
 
     Result Move(PosYx yx);
 
+    // curs_getyx
+
+    PosYx Getyx();
+    PosYx Getparyx();
+    PosYx Getbegyx();
+    PosYx Getmaxyx();
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
