@@ -65,25 +65,10 @@ AutoEndwin Initscr()
     return AutoEndwin{};
 }
 
-Result Endwin()
-{
-    RETURN_RESULT(endwin());
-}
-
-bool Isendwin()
-{
-    return isendwin();
-}
-
-int Lines()
-{
-    return LINES;
-}
-
-int Cols()
-{
-    return COLS;
-}
+Result Endwin() { RETURN_RESULT(endwin()); }
+bool Isendwin() { return isendwin(); }
+int Lines() { return LINES; }
+int Cols() { return COLS; }
 
 Result Cbreak(bool enable) { RETURN_RESULT(enable ? cbreak() : nocbreak()); }
 Result Nocbreak() { RETURN_RESULT(nocbreak()); }
@@ -162,15 +147,11 @@ Result Window::Mvderwin(PosYx viewed_top_left)
     RETURN_RESULT(mvderwin(CHECK_GET(), viewed_top_left.y, viewed_top_left.x));
 }
 
-Result Window::Syncok(bool enable)
-{
-    RETURN_RESULT(syncok(CHECK_GET(), enable));
-}
-
+Result Window::Syncok(bool enable) { RETURN_RESULT(syncok(CHECK_GET(), enable)); }
 void Window::Syncup() { wsyncup(CHECK_GET()); }
 void Window::Cursyncup() { wcursyncup(CHECK_GET()); }
-
 void Window::Syncdown() { wsyncdown(CHECK_GET()); }
+
 bool Window::IsCleared() const { return is_cleared(CHECK_GET()); }
 bool Window::IsIdcok() const { return is_idcok(CHECK_GET()); }
 bool Window::IsIdlok() const { return is_idlok(CHECK_GET()); }
