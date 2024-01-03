@@ -131,6 +131,8 @@ ColorRgb ColorContent(Color color)
     return {r, g, b};
 }
 
+Result Doupdate() { RETURN_RESULT(doupdate()); }
+
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
 {
@@ -247,6 +249,11 @@ Result Window::Erase() { RETURN_RESULT(werase(CHECK_GET())); }
 Result Window::Clear() { RETURN_RESULT(wclear(CHECK_GET())); }
 Result Window::Clrtobot() { RETURN_RESULT(wclrtobot(CHECK_GET())); }
 Result Window::Clrtoeol() { RETURN_RESULT(wclrtoeol(CHECK_GET())); }
+
+Result Window::Refresh() { RETURN_RESULT(wrefresh(CHECK_GET())); }
+Result Window::Noutrefresh() { RETURN_RESULT(wnoutrefresh(CHECK_GET())); }
+Result Window::Redrawwin() { RETURN_RESULT(redrawwin(CHECK_GET())); }
+Result Window::Redrawln(int beg_line, int num_lines) { RETURN_RESULT(wredrawln(CHECK_GET(), beg_line, num_lines)); }
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,

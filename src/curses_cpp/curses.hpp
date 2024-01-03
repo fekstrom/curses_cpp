@@ -297,6 +297,10 @@ ColorPairFgBg PairContent(int pair_number);
 Result InitColor(Color color, ColorRgb rgb);
 ColorRgb ColorContent(Color color);
 
+// curs_refresh
+
+Result Doupdate();
+
 class Window
 {
 public:
@@ -386,6 +390,14 @@ public:
     Result Clear();
     Result Clrtobot();
     Result Clrtoeol();
+
+    // curs_refresh
+
+    Result Refresh();
+    Result Noutrefresh();
+
+    Result Redrawwin();
+    Result Redrawln(int beg_line, int num_lines);
 
 private:
     Window SubwinImpl(
