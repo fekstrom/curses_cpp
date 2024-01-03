@@ -23,6 +23,9 @@
 
 #include <curses.h>
 
+#include <algorithm>
+#include <array>
+#include <limits>
 #include <stdexcept>
 
 #define CHECK_GET [&] { auto* ret = Get(); assert(ret); return ret; }
@@ -30,6 +33,61 @@
 
 namespace curses
 {
+
+template<typename Sized>
+static int ISize(Sized&& sized)
+{
+    assert(sized.size() <= std::numeric_limits<int>::max());
+    return static_cast<int>(sized.size());
+}
+
+namespace
+{
+
+template<int StackBufStrCap>
+class StringBuffer
+{
+public:
+    // Create a buffer with capacity for str_cap characters + trailing null
+    explicit StringBuffer(int str_cap) :
+        data_{buf_.data()} // NOLINT: buf_ is uninitialized
+    {
+        if (str_cap >= ISize(buf_))
+        {
+            str_.resize(str_cap + 1);
+            data_ = str_.data();
+        }
+    }
+
+    // Return a pointer to the buffer
+    char* Data() { return data_; }
+
+    // After a null-terminated string has been written to Data(), extract it.
+    std::string Str() &&
+    {
+        const auto using_buf = (data_ == buf_.data());
+        if (using_buf)
+        {
+            auto* e = std::find(buf_.begin(), buf_.end(), '\0');
+            assert(e != buf_.end());
+            str_.assign(buf_.begin(), e);
+        }
+        else
+        {
+            auto e = std::find(str_.begin(), str_.end(), '\0');
+            assert(e != str_.end());
+            str_.resize(e - str_.begin());
+        }
+        return std::move(str_);
+    }
+
+private:
+    char* data_;
+    std::string str_;
+    std::array<char, StackBufStrCap + 1> buf_;  // + 1 for trailing null
+};
+
+} // namespace
 
 AutoEndwin::AutoEndwin(AutoEndwin&& other) noexcept
     : released_{other.released_}
@@ -303,6 +361,22 @@ PosYx Window::Getmaxyx()
 
 int Window::Getch() { return wgetch(CHECK_GET()); }
 int Window::Getch(PosYx yx) { return mvwgetch(CHECK_GET(), yx.y, yx.x); }
+
+std::string Window::Getstr(int maxlen)
+{
+    auto buf = StringBuffer<1024>{maxlen};
+    const auto res = wgetnstr(CHECK_GET(), buf.Data(), maxlen);
+    if (res != OK) return "";
+    return std::move(buf).Str();
+}
+
+std::string Window::Getstr(PosYx yx, int maxlen)
+{
+    auto buf = StringBuffer<1024>{maxlen};
+    const auto res = mvwgetnstr(CHECK_GET(), yx.y, yx.x, buf.Data(), maxlen);
+    if (res != OK) return "";
+    return std::move(buf).Str();
+}
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,

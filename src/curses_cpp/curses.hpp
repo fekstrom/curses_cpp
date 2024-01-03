@@ -448,6 +448,11 @@ public:
     int Getch();
     int Getch(PosYx yx);
 
+    // curs_getstr
+
+    std::string Getstr(int maxlen = 1024);
+    std::string Getstr(PosYx yx, int maxlen = 1024);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
