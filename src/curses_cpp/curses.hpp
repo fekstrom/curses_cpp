@@ -523,6 +523,10 @@ public:
     std::string Instr(int maxlen = 1024);
     std::string Instr(PosYx yx, int maxlen = 1024);
 
+    // curs_scroll
+
+    Result Scroll(int n = 1);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,

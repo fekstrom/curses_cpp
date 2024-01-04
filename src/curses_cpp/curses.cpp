@@ -484,6 +484,8 @@ std::string Window::Instr(PosYx yx, int n)
     return std::move(buf).Str();
 }
 
+Result Window::Scroll(int n) { RETURN_RESULT(wscrl(CHECK_GET(), n)); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,
