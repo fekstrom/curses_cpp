@@ -7,6 +7,7 @@ target_sources(unit_tests PRIVATE
   test_curs_addstr.cpp
   test_curs_attr.cpp
   test_curs_color.cpp
+  test_curs_deleteln.cpp
   test_curs_getch.cpp
   test_curs_getyx.cpp
   test_curs_inch.cpp

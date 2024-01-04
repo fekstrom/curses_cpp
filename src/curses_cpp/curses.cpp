@@ -486,6 +486,10 @@ std::string Window::Instr(PosYx yx, int n)
 
 Result Window::Scroll(int n) { RETURN_RESULT(wscrl(CHECK_GET(), n)); }
 
+Result Window::Deleteln() { RETURN_RESULT(wdeleteln(CHECK_GET())); }
+Result Window::Insertln() { RETURN_RESULT(winsertln(CHECK_GET())); }
+Result Window::Insdelln(int n) { RETURN_RESULT(winsdelln(CHECK_GET(), n)); }
+
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,
         PosYx top_left,

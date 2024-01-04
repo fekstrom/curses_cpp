@@ -527,6 +527,12 @@ public:
 
     Result Scroll(int n = 1);
 
+    // curs_deleteln
+
+    Result Deleteln();
+    Result Insertln();
+    Result Insdelln(int n);
+
 private:
     Window SubwinImpl(
             SizeLinesCols lines_cols,
