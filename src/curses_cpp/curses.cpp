@@ -324,6 +324,10 @@ Result Window::Chgat(PosYx yx, int n, Attr attr)
     RETURN_RESULT(mvwchgat(CHECK_GET(), yx.y, yx.x, n, a, c, nullptr));
 }
 
+Result Window::Bkgd(Chtype ch) { RETURN_RESULT(wbkgd(CHECK_GET(), ch.Get())); }
+void Window::Bkgdset(Chtype ch) { wbkgdset(CHECK_GET(), ch.Get()); }
+Chtype Window::Getbkgd() { return Chtype{getbkgd(CHECK_GET())}; }
+
 Result Window::Erase() { RETURN_RESULT(werase(CHECK_GET())); }
 Result Window::Clear() { RETURN_RESULT(wclear(CHECK_GET())); }
 Result Window::Clrtobot() { RETURN_RESULT(wclrtobot(CHECK_GET())); }

@@ -429,6 +429,12 @@ public:
     Result Chgat(PosYx yx, Attr attr);
     Result Chgat(PosYx yx, int n, Attr attr);
 
+    // curs_bkgd
+
+    Result Bkgd(Chtype ch);
+    void Bkgdset(Chtype ch);
+    Chtype Getbkgd();
+
     // curs_clear
 
     Result Erase();
