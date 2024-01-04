@@ -212,6 +212,9 @@ Result Doupdate() { RETURN_RESULT(doupdate()); }
 Result Ungetch(int ch) { RETURN_RESULT(ungetch(ch)); }
 bool HasKey(int ch) { return static_cast<bool>(has_key(ch)); }
 
+Result Beep() { RETURN_RESULT(beep()); }
+Result Flash() { RETURN_RESULT(flash()); }
+
 Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     window_{newwin(lines_cols.lines, lines_cols.cols, top_left.y, top_left.x)}
 {

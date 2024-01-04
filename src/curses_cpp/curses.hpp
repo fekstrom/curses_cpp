@@ -346,6 +346,11 @@ Result Doupdate();
 Result Ungetch(int ch);
 bool HasKey(int ch);
 
+// curs_beep
+
+Result Beep();
+Result Flash();
+
 class Window
 {
 public:
