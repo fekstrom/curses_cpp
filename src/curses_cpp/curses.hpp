@@ -75,6 +75,18 @@ constexpr Mmask& operator|=(Mmask& a, Mmask b) { return a = a | b; }
 constexpr Mmask& operator&=(Mmask& a, Mmask b) { return a = a & b; }
 constexpr Mmask& operator^=(Mmask& a, Mmask b) { return a = a ^ b; }
 
+struct PosYx;
+
+struct Mevent
+{
+    short id = 0;   // ID to distinguish multiple devices
+    int x = 0;      // Event x-coordinate
+    int y = 0;      // Event y-coordinate
+    int z = 0;      // Unused
+    Mmask bstate{};
+    constexpr PosYx Getyx() const;
+};
+
 enum class CursorVisibility : int
 {
     Err = -1,
@@ -205,6 +217,11 @@ constexpr bool operator==(PosYx a, PosYx b)
 constexpr bool operator!=(PosYx a, PosYx b)
 {
     return !(a == b);
+}
+
+constexpr PosYx Mevent::Getyx() const
+{
+    return {y, x};
 }
 
 struct SizeLinesCols
