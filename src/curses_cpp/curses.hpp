@@ -65,6 +65,16 @@ enum class Color : int
 // switch statements over the return value of Getch.
 namespace Key {} // NOLINT: CamelCase
 
+enum class Mmask : unsigned;
+
+constexpr Mmask operator|(Mmask a, Mmask b) { return static_cast<Mmask>(static_cast<unsigned>(a) | static_cast<unsigned>(b)); }
+constexpr Mmask operator&(Mmask a, Mmask b) { return static_cast<Mmask>(static_cast<unsigned>(a) & static_cast<unsigned>(b)); }
+constexpr Mmask operator^(Mmask a, Mmask b) { return static_cast<Mmask>(static_cast<unsigned>(a) ^ static_cast<unsigned>(b)); }
+
+constexpr Mmask& operator|=(Mmask& a, Mmask b) { return a = a | b; }
+constexpr Mmask& operator&=(Mmask& a, Mmask b) { return a = a & b; }
+constexpr Mmask& operator^=(Mmask& a, Mmask b) { return a = a ^ b; }
+
 enum class CursorVisibility : int
 {
     Err = -1,
@@ -740,6 +750,62 @@ enum : int
 }; // enum
 
 } // namespace Key
+
+namespace detail
+{
+
+constexpr unsigned ButtonReleased = 001U;
+constexpr unsigned ButtonPressed  = 002U;
+constexpr unsigned ButtonClicked  = 004U;
+constexpr unsigned DoubleClicked  = 010U;
+constexpr unsigned TripleClicked  = 020U;
+constexpr unsigned ReservedEvent  = 040U;
+
+constexpr unsigned MouseMask(int button, unsigned bit)
+{
+    return bit << ((button - 1) * 5);
+}
+
+} // namespace detail
+
+enum class Mmask : unsigned
+{
+    Button1Pressed       = detail::MouseMask(1, detail::ButtonPressed),
+    Button1Released      = detail::MouseMask(1, detail::ButtonReleased),
+    Button1Clicked       = detail::MouseMask(1, detail::ButtonClicked),
+    Button1DoubleClicked = detail::MouseMask(1, detail::DoubleClicked),
+    Button1TripleClicked = detail::MouseMask(1, detail::TripleClicked),
+    //
+    Button2Pressed       = detail::MouseMask(2, detail::ButtonPressed),
+    Button2Released      = detail::MouseMask(2, detail::ButtonReleased),
+    Button2Clicked       = detail::MouseMask(2, detail::ButtonClicked),
+    Button2DoubleClicked = detail::MouseMask(2, detail::DoubleClicked),
+    Button2TripleClicked = detail::MouseMask(2, detail::TripleClicked),
+    //
+    Button3Pressed       = detail::MouseMask(3, detail::ButtonPressed),
+    Button3Released      = detail::MouseMask(3, detail::ButtonReleased),
+    Button3Clicked       = detail::MouseMask(3, detail::ButtonClicked),
+    Button3DoubleClicked = detail::MouseMask(3, detail::DoubleClicked),
+    Button3TripleClicked = detail::MouseMask(3, detail::TripleClicked),
+    //
+    Button4Pressed       = detail::MouseMask(4, detail::ButtonPressed),
+    Button4Released      = detail::MouseMask(4, detail::ButtonReleased),
+    Button4Clicked       = detail::MouseMask(4, detail::ButtonClicked),
+    Button4DoubleClicked = detail::MouseMask(4, detail::DoubleClicked),
+    Button4TripleClicked = detail::MouseMask(4, detail::TripleClicked),
+    //
+    Button5Pressed       = detail::MouseMask(5, detail::ButtonPressed),
+    Button5Released      = detail::MouseMask(5, detail::ButtonReleased),
+    Button5Clicked       = detail::MouseMask(5, detail::ButtonClicked),
+    Button5DoubleClicked = detail::MouseMask(5, detail::DoubleClicked),
+    Button5TripleClicked = detail::MouseMask(5, detail::TripleClicked),
+    //
+    ButtonShift          = detail::MouseMask(6, 002U),
+    ButtonCtrl           = detail::MouseMask(6, 001U),
+    ButtonAlt            = detail::MouseMask(6, 004U),
+    ReportMousePosition  = detail::MouseMask(6, 010U),
+    AllMouseEvents       = ReportMousePosition - 1,
+};
 
 } // namespace curses
 

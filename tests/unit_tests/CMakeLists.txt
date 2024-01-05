@@ -27,6 +27,7 @@ target_sources(unit_tests PRIVATE
   test_type_chtype.cpp
   test_type_color.cpp
   test_type_key.cpp
+  test_type_mouse_mask.cpp
   test_type_result.cpp
   test_type_window.cpp
 )
