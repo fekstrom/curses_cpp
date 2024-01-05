@@ -212,6 +212,35 @@ Result Doupdate() { RETURN_RESULT(doupdate()); }
 Result Ungetch(int ch) { RETURN_RESULT(ungetch(ch)); }
 bool HasKey(int ch) { return static_cast<bool>(has_key(ch)); }
 
+bool HasMouse() { return has_mouse(); }
+
+Mmask Mousemask(Mmask newmask)
+{
+    return static_cast<Mmask>(mousemask(static_cast<mmask_t>(newmask), nullptr));
+}
+
+Mmask Mousemask(Mmask newmask, Mmask oldmask)
+{
+    auto oldmask_mmask = static_cast<mmask_t>(oldmask);
+    return static_cast<Mmask>(mousemask(static_cast<mmask_t>(newmask), &oldmask_mmask));
+}
+
+int Mouseinterval(int interval_ms) { return mouseinterval(interval_ms); }
+
+std::optional<Mevent> Getmouse()
+{
+    auto out = MEVENT{};
+    const auto res = getmouse(&out);
+    if (res == ERR) return std::nullopt;
+    return Mevent{out.id, out.x, out.y, out.z, static_cast<Mmask>(out.bstate)};
+}
+
+Result Ungetmouse(const Mevent& event)
+{
+    auto evt = MEVENT{event.id, event.x, event.y, event.z, static_cast<mmask_t>(event.bstate)};
+    RETURN_RESULT(ungetmouse(&evt));
+}
+
 Result Beep() { RETURN_RESULT(beep()); }
 Result Flash() { RETURN_RESULT(flash()); }
 
@@ -496,6 +525,25 @@ Result Window::Scroll(int n) { RETURN_RESULT(wscrl(CHECK_GET(), n)); }
 Result Window::Deleteln() { RETURN_RESULT(wdeleteln(CHECK_GET())); }
 Result Window::Insertln() { RETURN_RESULT(winsertln(CHECK_GET())); }
 Result Window::Insdelln(int n) { RETURN_RESULT(winsdelln(CHECK_GET(), n)); }
+
+bool Window::Enclose(PosYx pos_on_screen) const
+{
+    return wenclose(CHECK_GET(), pos_on_screen.y, pos_on_screen.x);
+}
+
+PosYx Window::TransformToWindow(PosYx pos_on_screen) const
+{
+    auto ret = pos_on_screen;
+    wmouse_trafo(CHECK_GET(), &ret.y, &ret.x, false);
+    return ret;
+}
+
+PosYx Window::TransformToScreen(PosYx pos_in_window) const
+{
+    auto ret = pos_in_window;
+    wmouse_trafo(CHECK_GET(), &ret.y, &ret.x, true);
+    return ret;
+}
 
 Window Window::SubwinImpl(
         SizeLinesCols lines_cols,

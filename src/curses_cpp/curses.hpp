@@ -23,6 +23,7 @@
 #define CURSES_CPP_CURSES_HPP_
 
 #include <cassert>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -373,6 +374,18 @@ Result Doupdate();
 Result Ungetch(int ch);
 bool HasKey(int ch);
 
+// curs_mouse
+
+bool HasMouse();
+
+Mmask Mousemask(Mmask newmask);
+Mmask Mousemask(Mmask newmask, Mmask oldmask);
+
+int Mouseinterval(int interval_ms);
+
+std::optional<Mevent> Getmouse();
+Result Ungetmouse(const Mevent& event);
+
 // curs_beep
 
 Result Beep();
@@ -570,6 +583,12 @@ public:
     Result Deleteln();
     Result Insertln();
     Result Insdelln(int n);
+
+    // curs_mouse
+
+    bool Enclose(PosYx pos_on_screen) const;
+    PosYx TransformToWindow(PosYx pos_on_screen) const;
+    PosYx TransformToScreen(PosYx pos_in_window) const;
 
 private:
     Window SubwinImpl(
