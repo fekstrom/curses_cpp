@@ -6,3 +6,6 @@ target_link_libraries(hello CursesCpp::CursesCpp)
 
 add_executable(minimal minimal.cpp)
 target_link_libraries(minimal CursesCpp::CursesCpp)
+
+add_executable(mouse mouse.cpp)
+target_link_libraries(mouse CursesCpp::CursesCpp)
