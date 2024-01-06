@@ -370,6 +370,21 @@ Result Window::Noutrefresh() { RETURN_RESULT(wnoutrefresh(CHECK_GET())); }
 Result Window::Redrawwin() { RETURN_RESULT(redrawwin(CHECK_GET())); }
 Result Window::Redrawln(int beg_line, int num_lines) { RETURN_RESULT(wredrawln(CHECK_GET(), beg_line, num_lines)); }
 
+Result Window::Touchwin(bool changed)
+{
+    if (changed) RETURN_RESULT(touchwin(CHECK_GET()));
+    RETURN_RESULT(untouchwin(CHECK_GET()));
+}
+Result Window::Untouchwin() { RETURN_RESULT(untouchwin(CHECK_GET())); }
+bool Window::IsWintouched() { return is_wintouched(CHECK_GET()); }
+
+Result Window::Touchline(int start, int count, bool changed)
+{
+    RETURN_RESULT(wtouchln(CHECK_GET(), start, count, changed));
+}
+Result Window::Untouchline(int start, int count) { RETURN_RESULT(wtouchln(CHECK_GET(), start, count, false)); }
+bool Window::IsLinetouched(int line) { return is_linetouched(CHECK_GET(), line); }
+
 Result Window::Border(const BorderSides& sides, const BorderCorners& corners)
 {
     const auto res = wborder(CHECK_GET(),

@@ -89,7 +89,6 @@ to the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.h
 - curs_termattrs
 - curs_termcap
 - curs_terminfo
-- curs_touch
 - curs_trace
 - curs_util
 

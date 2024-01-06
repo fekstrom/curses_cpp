@@ -24,6 +24,7 @@ target_sources(unit_tests PRIVATE
   test_curs_outopts.cpp
   test_curs_overlay.cpp
   test_curs_scroll.cpp
+  test_curs_touch.cpp
   test_curs_window.cpp
   test_type_attr.cpp
   test_type_chtype.cpp

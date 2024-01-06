@@ -495,6 +495,16 @@ public:
     Result Redrawwin();
     Result Redrawln(int beg_line, int num_lines);
 
+    // curs_touch
+
+    Result Touchwin(bool changed = true);
+    Result Untouchwin();
+    bool IsWintouched();
+
+    Result Touchline(int start, int count, bool changed = true);
+    Result Untouchline(int start, int count);
+    bool IsLinetouched(int line);
+
     // curs_border
 
     Result Border(const BorderSides& sides, const BorderCorners& corners = {});
