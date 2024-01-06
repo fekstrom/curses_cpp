@@ -80,7 +80,6 @@ to the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.h
 - curs_kernel
 - curs_legacy
 - curs_memleaks
-- curs_overlay
 - curs_pad
 - curs_print
 - curs_printw

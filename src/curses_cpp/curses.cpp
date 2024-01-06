@@ -383,6 +383,36 @@ Result Window::Hline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwhline(CHECK_
 Result Window::Vline(Chtype ch, int n) { RETURN_RESULT(wvline(CHECK_GET(), ch.Get(), n)); }
 Result Window::Vline(PosYx yx, Chtype ch, int n) { RETURN_RESULT(mvwvline(CHECK_GET(), yx.y, yx.x, ch.Get(), n)); }
 
+Result Window::Overlay(const Window& src)
+{
+    RETURN_RESULT(overlay(src.Get(), CHECK_GET()));
+}
+
+Result Window::Overlay(const Window& src, PosYx src_min, PosYx dst_min, PosYx dst_max)
+{
+    const auto res = copywin(
+            src.Get(), CHECK_GET(),
+            src_min.y, src_min.x,
+            dst_min.y, dst_min.x,
+            dst_max.y, dst_max.x, true);
+    RETURN_RESULT(res);
+}
+
+Result Window::Overwrite(const Window& src)
+{
+    RETURN_RESULT(overwrite(src.Get(), CHECK_GET()));
+}
+
+Result Window::Overwrite(const Window& src, PosYx src_min, PosYx dst_min, PosYx dst_max)
+{
+    const auto res = copywin(
+            src.Get(), CHECK_GET(),
+            src_min.y, src_min.x,
+            dst_min.y, dst_min.x,
+            dst_max.y, dst_max.x, false);
+    RETURN_RESULT(res);
+}
+
 Result Window::Move(PosYx yx) { RETURN_RESULT(wmove(CHECK_GET(), yx.y, yx.x)); }
 
 PosYx Window::Getyx()

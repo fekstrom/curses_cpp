@@ -22,6 +22,7 @@ target_sources(unit_tests PRIVATE
   test_curs_move.cpp
   test_curs_opaque.cpp
   test_curs_outopts.cpp
+  test_curs_overlay.cpp
   test_curs_scroll.cpp
   test_curs_window.cpp
   test_type_attr.cpp

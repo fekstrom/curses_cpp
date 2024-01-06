@@ -507,6 +507,14 @@ public:
     Result Vline(Chtype ch, int n);
     Result Vline(PosYx yx, Chtype ch, int n);
 
+    // curs_overlay
+
+    Result Overlay(const Window& src);
+    Result Overlay(const Window& src, PosYx src_min, PosYx dst_min, PosYx dst_max);
+
+    Result Overwrite(const Window& src);
+    Result Overwrite(const Window& src, PosYx src_min, PosYx dst_min, PosYx dst_max);
+
     // curs_move
 
     Result Move(PosYx yx);
