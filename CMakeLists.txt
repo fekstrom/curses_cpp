@@ -10,6 +10,11 @@ endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT CMAKE_BUILD_TYPE)
+  message(STATUS "No build type specified. Defaulting to CMAKE_BUILD_TYPE=Release.")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "" FORCE)
+endif()
+
 include(CursesCppCompilerWarnings)
 include(CursesCppForceEnableAsserts)
 include(CursesCppOutputDirectories)
