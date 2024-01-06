@@ -1,9 +1,16 @@
 # CursesCpp
 
-CursesCpp is a C++ interface to the
-[ncurses](https://invisible-island.net/ncurses/man/ncurses.3x.html) library.
-It uses C++ idioms such as RAII, function overloading, and strong types, but
+CursesCpp is a C++ interface to the `ncurses` library. It uses C++
+idioms such as RAII, function overloading, and strong types, but
 otherwise aims to be transparent.
+
+There's currently no documentation, but it should be relatively easy
+to translate from the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.html)
+to CursesCpp. Some reading of the CursesCpp [code](src/) will likely
+be needed. An IDE with good code navigation and code completion should help.
+
+You may want to consider using the C++ interface that is included in
+[ncurses](https://github.com/mirror/ncurses/tree/master/c%2B%2B).
 
 ## Examples
 
@@ -29,7 +36,7 @@ More examples can be found in the [examples](examples) directory.
 ## Dependencies
 
 CursesCpp depends on ncurses and requires C++ 17. The unit tests
-(optional) require Catch2.
+(optional) use Catch2.
 
 ## CMake
 
