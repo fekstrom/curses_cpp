@@ -23,6 +23,7 @@
 #define CURSES_CPP_CURSES_HPP_
 
 #include <cassert>
+#include <cstdio>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -342,8 +343,22 @@ Result Meta(bool enable = true);
 
 // curs_util
 
+void Filter();
+void Nofilter();
+
+void UseEnv(bool bf);
+void UseTioctl(bool bf);
+
+Result DelayOutput(int ms);
+Result Flushinp();
+
 std::string Unctrl(Chtype ch);
 std::string Keyname(int key);
+
+class Window;
+
+Result Putwin(Window& win, FILE* file);
+std::optional<Window> Getwin(FILE* file);
 
 // curs_kernel
 
@@ -609,6 +624,8 @@ public:
     PosYx TransformToScreen(PosYx pos_in_window) const;
 
 private:
+    friend std::optional<Window> Getwin(FILE* file);
+
     Window SubwinImpl(
             SizeLinesCols lines_cols,
             PosYx top_left,

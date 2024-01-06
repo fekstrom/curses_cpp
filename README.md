@@ -90,7 +90,6 @@ to the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.h
 - curs_termcap
 - curs_terminfo
 - curs_trace
-- curs_util
 
 ### Wide characters
 

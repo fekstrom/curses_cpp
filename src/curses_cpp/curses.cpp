@@ -148,6 +148,13 @@ Result Meta(bool enable)
     RETURN_RESULT(meta(nullptr, enable));
 }
 
+void Filter() { filter(); }
+void Nofilter() { nofilter(); }
+void UseEnv(bool bf) { use_env(bf); }
+void UseTioctl(bool bf) { use_tioctl(bf); }
+Result DelayOutput(int ms) { RETURN_RESULT(delay_output(ms)); }
+Result Flushinp() { RETURN_RESULT(flushinp()); }
+
 std::string Unctrl(Chtype ch)
 {
     const auto* ret = unctrl(ch.Get());
@@ -158,6 +165,20 @@ std::string Keyname(int key)
 {
     const auto* ret = keyname(key);
     return std::string{ret ? ret : "null"};
+}
+
+Result Putwin(Window& win, FILE* file)
+{
+    RETURN_RESULT(putwin(win.Get(), file));
+}
+
+std::optional<Window> Getwin(FILE* file)
+{
+    auto* window = getwin(file);
+    if (window == nullptr) return std::nullopt;
+    auto ret = Window{};
+    ret.window_ = window;
+    return ret;
 }
 
 CursorVisibility CursSet(CursorVisibility vis)
