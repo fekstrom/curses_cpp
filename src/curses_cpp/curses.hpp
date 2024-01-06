@@ -318,6 +318,16 @@ bool Isendwin();
 int Lines();
 int Cols();
 
+// curs_termattrs
+
+std::string Termname();
+std::string Longname();
+
+Attr Termattrs();
+
+char Erasechar();
+char Killchar();
+
 // curs_inopts
 
 Result Cbreak(bool enable = true);

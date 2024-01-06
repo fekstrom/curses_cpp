@@ -130,6 +130,22 @@ bool Isendwin() { return isendwin(); }
 int Lines() { return LINES; }
 int Cols() { return COLS; }
 
+std::string Termname()
+{
+    auto* ret = termname();
+    return ret == nullptr ? "" : std::string{ret};
+}
+
+std::string Longname()
+{
+    auto* ret = longname();
+    return ret == nullptr ? "" : std::string{ret};
+}
+
+Attr Termattrs() { return static_cast<Attr>(termattrs()); }
+char Erasechar() { return erasechar(); }
+char Killchar() { return killchar(); }
+
 Result Cbreak(bool enable) { RETURN_RESULT(enable ? cbreak() : nocbreak()); }
 Result Nocbreak() { RETURN_RESULT(nocbreak()); }
 Result Echo(bool enable) { RETURN_RESULT(enable ? echo() : noecho()); }

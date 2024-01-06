@@ -85,7 +85,6 @@ to the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.h
 - curs_scanw
 - curs_scr_dump
 - curs_slk
-- curs_termattrs
 - curs_termcap
 - curs_terminfo
 - curs_trace
