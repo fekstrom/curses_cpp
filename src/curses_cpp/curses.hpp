@@ -41,9 +41,6 @@ enum class Result : int
     Ok  =  0,
 };
 
-constexpr bool operator==(Result a, Result b) { return static_cast<int>(a) == static_cast<int>(b); }
-constexpr bool operator!=(Result a, Result b) { return !(a == b); }
-
 constexpr bool operator==(Result a, int b) { return static_cast<int>(a) == b; }
 constexpr bool operator!=(Result a, int b) { return !(a == b); }
 
@@ -132,9 +129,6 @@ enum class Attr : unsigned
     Top         = 1U << (21 + detail::AttrShift),
     Vertical    = 1U << (22 + detail::AttrShift),
 };
-
-constexpr bool operator==(Attr a, Attr b) { return static_cast<unsigned>(a) == static_cast<unsigned>(b); }
-constexpr bool operator!=(Attr a, Attr b) { return !(a == b); }
 
 constexpr Attr operator|(Attr a, Attr b) { return static_cast<Attr>(static_cast<unsigned>(a) | static_cast<unsigned>(b)); }
 constexpr Attr operator&(Attr a, Attr b) { return static_cast<Attr>(static_cast<unsigned>(a) & static_cast<unsigned>(b)); }
