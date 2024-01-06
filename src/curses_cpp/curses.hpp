@@ -457,6 +457,8 @@ public:
     bool IsEmpty() const { return window_ == nullptr; }
     explicit operator bool() const { return !IsEmpty(); }
 
+    WINDOW* Release() { auto* ret = window_; window_ = nullptr; parent_ = nullptr; return ret; }
+
     const WINDOW* Get() const { return window_; }
     WINDOW* Get() { return window_; }
 
