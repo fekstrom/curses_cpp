@@ -25,6 +25,7 @@
 
 #include <algorithm>
 #include <array>
+#include <deque>
 #include <limits>
 #include <stdexcept>
 
@@ -181,10 +182,31 @@ std::optional<Window> Getwin(FILE* file)
     return ret;
 }
 
+Result DefProgMode() { RETURN_RESULT(def_prog_mode()); }
+Result DefShellMode() { RETURN_RESULT(def_shell_mode()); }
+Result ResetProgMode() { RETURN_RESULT(reset_prog_mode()); }
+Result ResetShellMode() { RETURN_RESULT(reset_shell_mode()); }
+Result Savetty() { RETURN_RESULT(savetty()); }
+Result Resetty() { RETURN_RESULT(resetty()); }
+
+PosYx Getsyx()
+{
+    auto ret = PosYx{};
+    getsyx(ret.y, ret.x);
+    return ret;
+}
+
+void Setsyx(PosYx yx)
+{
+    setsyx(yx.y, yx.x);
+}
+
 CursorVisibility CursSet(CursorVisibility vis)
 {
     return static_cast<CursorVisibility>(curs_set(static_cast<int>(vis)));
 }
+
+Result Napms(int ms) { RETURN_RESULT(napms(ms)); }
 
 bool HasColors() { return has_colors(); }
 bool CanChangeColor() { return can_change_color(); }

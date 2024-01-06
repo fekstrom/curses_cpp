@@ -362,7 +362,21 @@ std::optional<Window> Getwin(FILE* file);
 
 // curs_kernel
 
+Result DefProgMode();
+Result DefShellMode();
+
+Result ResetProgMode();
+Result ResetShellMode();
+
+Result Savetty();
+Result Resetty();
+
+PosYx Getsyx();
+void Setsyx(PosYx yx);
+
 CursorVisibility CursSet(CursorVisibility vis);
+
+Result Napms(int ms);
 
 // curs_color
 
