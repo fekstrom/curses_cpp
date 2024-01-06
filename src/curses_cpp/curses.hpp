@@ -682,9 +682,11 @@ inline void swap(Window& a, Window& b)
 }
 
 inline Window::Window(Window&& other) noexcept :
-    window_{other.window_}
+    window_{other.window_},
+    parent_{other.parent_}
 {
     other.window_ = nullptr;
+    other.parent_ = nullptr;
 }
 
 inline Window& Window::operator=(Window&& other) noexcept
