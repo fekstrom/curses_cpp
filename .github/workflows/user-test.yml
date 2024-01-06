@@ -1,0 +1,7 @@
+on: [push]
+jobs:
+  user-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./tools/user_test.cmake
