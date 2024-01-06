@@ -242,6 +242,22 @@ constexpr bool operator!=(SizeLinesCols a, SizeLinesCols b)
     return !(a == b);
 }
 
+struct ScrregTopBot
+{
+    int top = 0;
+    int bot = 0;
+};
+
+constexpr bool operator==(ScrregTopBot a, ScrregTopBot b)
+{
+    return a.top == b.top && a.bot == b.bot;
+}
+
+constexpr bool operator!=(ScrregTopBot a, ScrregTopBot b)
+{
+    return !(a == b);
+}
+
 struct ColorPairFgBg
 {
     Color fg = Color::Black;
@@ -481,6 +497,7 @@ public:
     bool IsSubwin() const;
     bool IsSyncok() const;
     int Getdelay() const;
+    ScrregTopBot Getscrreg() const;
 
     // curs_inopts
 
@@ -497,7 +514,7 @@ public:
     void Immedok(bool enable = true);
     Result Leaveok(bool enable = true);
     Result Scrollok(bool enable = true);
-    Result Setscrreg(int top, int bot);
+    Result Setscrreg(ScrregTopBot top_bot);
 
     // curs_attr
 

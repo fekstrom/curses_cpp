@@ -43,4 +43,8 @@ TEST_CASE("curs_opaque")
     REQUIRE(!window.IsSubwin());
     REQUIRE(!window.IsSyncok());
     REQUIRE(window.Getdelay() == -1);
+
+    REQUIRE(window.Getscrreg().bot != 2);
+    REQUIRE(Result::Ok == window.Setscrreg({0, 2}));
+    REQUIRE(window.Getscrreg() == ScrregTopBot{0, 2});
 }

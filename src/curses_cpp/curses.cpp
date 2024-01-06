@@ -379,6 +379,12 @@ bool Window::IsScrollok() const { return is_scrollok(CHECK_GET()); }
 bool Window::IsSubwin() const { return is_subwin(CHECK_GET()); }
 bool Window::IsSyncok() const { return is_syncok(CHECK_GET()); }
 int Window::Getdelay() const { return wgetdelay(CHECK_GET()); }
+ScrregTopBot Window::Getscrreg() const
+{
+    auto ret = ScrregTopBot{};
+    wgetscrreg(CHECK_GET(), &ret.top, &ret.bot);
+    return ret;
+}
 
 Result Window::Keypad(bool enable) { RETURN_RESULT(keypad(CHECK_GET(), enable)); }
 Result Window::Nodelay(bool enable) { RETURN_RESULT(nodelay(CHECK_GET(), enable)); }
@@ -391,7 +397,7 @@ void Window::Idcok(bool enable) { idcok(CHECK_GET(), enable); }
 void Window::Immedok(bool enable) { immedok(CHECK_GET(), enable); }
 Result Window::Leaveok(bool enable) { RETURN_RESULT(leaveok(CHECK_GET(), enable)); }
 Result Window::Scrollok(bool enable) { RETURN_RESULT(scrollok(CHECK_GET(), enable)); }
-Result Window::Setscrreg(int top, int bot) { RETURN_RESULT(wsetscrreg(CHECK_GET(), top, bot)); }
+Result Window::Setscrreg(ScrregTopBot top_bot) { RETURN_RESULT(wsetscrreg(CHECK_GET(), top_bot.top, top_bot.bot)); }
 
 Result Window::Attron(Attr attr) { RETURN_RESULT(wattron(CHECK_GET(), static_cast<int>(attr))); }
 Result Window::Attroff(Attr attr) { RETURN_RESULT(wattroff(CHECK_GET(), static_cast<int>(attr))); }

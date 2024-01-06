@@ -36,5 +36,5 @@ TEST_CASE("curs_outopts")
     window.Immedok(false);
     REQUIRE(Result::Ok == window.Leaveok(false));
     REQUIRE(Result::Ok == window.Scrollok(false));
-    REQUIRE(Result::Ok == window.Setscrreg(0, curses::Lines() - 1));
+    REQUIRE(Result::Ok == window.Setscrreg({0, curses::Lines() - 1}));
 }
