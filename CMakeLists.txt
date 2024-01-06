@@ -20,7 +20,7 @@ include(CursesCppForceEnableAsserts)
 include(CursesCppOutputDirectories)
 
 option(CURSES_CPP_BUILD_DOCUMENTATION "Build documentation" OFF)
-option(CURSES_CPP_BUILD_EXAMPLES "Build examples as part of main build" OFF)
+option(CURSES_CPP_BUILD_EXAMPLES "Build examples as part of main build" ON)
 option(CURSES_CPP_BUILD_UNIT_TESTS "Build unit tests" OFF)
 
 if(CURSES_CPP_BUILD_DOCUMENTATION)
