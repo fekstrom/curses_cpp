@@ -107,6 +107,7 @@ AutoEndwin& AutoEndwin::operator=(AutoEndwin&& other) noexcept
 AutoEndwin::~AutoEndwin()
 {
     if (released_) return;
+    [[maybe_unused]]
     const auto res = endwin();
     assert(res != ERR);
 }
@@ -335,6 +336,7 @@ Window::~Window()
     assert(window_ != curscr);
     assert(window_ != newscr);
     assert(window_ != stdscr);
+    [[maybe_unused]]
     const auto res = delwin(window_);
     // delwin returns ERR if this is the parent of another window, see
     // https://invisible-island.net/ncurses/man/curs_window.3x.html
