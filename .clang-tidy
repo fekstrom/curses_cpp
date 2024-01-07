@@ -8,6 +8,7 @@ Checks: '
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-c-arrays,
   -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-macro-usage,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-*,
   google-*,
@@ -29,6 +30,7 @@ Checks: '
   -readability-magic-numbers,
   -readability-simplify-boolean-expr,
   -readability-static-accessed-through-instance,
+  -readability-named-parameter,
 '
 
 CheckOptions:
