@@ -24,7 +24,7 @@
 #include <algorithm>
 #include <string>
 
-int main(int argc, const char** argv)
+int main()
 {
     const auto auto_endwin = curses::Initscr();
     curses::Noecho();
