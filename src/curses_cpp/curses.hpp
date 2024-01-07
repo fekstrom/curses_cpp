@@ -305,7 +305,10 @@ struct BorderCorners
 class AutoEndwin
 {
 public:
-    [[nodiscard]] AutoEndwin() = default;
+#if __has_cpp_attribute(nodiscard) >= 201907
+    [[nodiscard]]
+#endif
+    AutoEndwin() = default;
     AutoEndwin(const AutoEndwin&) = delete;
     AutoEndwin& operator=(const AutoEndwin&) = delete;
     AutoEndwin(AutoEndwin&& other) noexcept;
