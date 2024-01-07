@@ -30,6 +30,8 @@ using namespace curses;
 
 static_assert(std::is_same_v<decltype(std::declval<Chtype>().Get()), chtype>);
 
+static_assert(Chtype{}.Get() == 0);
+
 static_assert(Chtype{'a'}.GetChar() == 'a');
 static_assert(Chtype{'K'}.GetChar() == 'K');
 static_assert(Chtype{'3'}.GetChar() == '3');
