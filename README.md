@@ -35,8 +35,8 @@ More examples can be found in the [examples](examples) directory.
 
 ## Dependencies
 
-CursesCpp depends on ncurses and requires C++ 17. The unit tests
-(optional) use Catch2.
+CursesCpp depends on ncurses (version 6.2 or later) and requires C++ 17. The
+unit tests (optional) use Catch2.
 
 ## CMake
 

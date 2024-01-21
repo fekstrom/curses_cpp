@@ -29,6 +29,8 @@
 #include <limits>
 #include <stdexcept>
 
+static_assert(NCURSES_VERSION_MAJOR >= 6 && NCURSES_VERSION_MINOR >= 2);
+
 #define CHECK_GET [&] { auto* ret = Get(); assert(ret); return ret; }
 #define RETURN_RESULT(expr) return static_cast<Result>(expr)
 
