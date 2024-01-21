@@ -443,6 +443,11 @@ Result Ungetmouse(const Mevent& event);
 Result Beep();
 Result Flash();
 
+// curs_extend
+
+std::string CursesVersion();
+bool UseExtendendNames(bool enable);
+
 class Window
 {
 public:

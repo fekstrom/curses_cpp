@@ -2,6 +2,7 @@ find_package(Catch2 3 REQUIRED)
 
 add_executable(unit_tests "")
 target_sources(unit_tests PRIVATE
+  event_listeners.cpp
   test_curs_addch.cpp
   test_curs_addchstr.cpp
   test_curs_addstr.cpp

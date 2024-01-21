@@ -313,6 +313,16 @@ Window::Window(SizeLinesCols lines_cols, PosYx top_left) :
     }
 }
 
+std::string CursesVersion()
+{
+    return std::string{curses_version()};
+}
+
+bool UseExtendendNames(bool enable)
+{
+    return use_extended_names(enable);
+}
+
 Window::Window(const Window& other) :
     window_{dupwin(static_cast<WINDOW*>(other.window_))},
     parent_{other.parent_}

@@ -83,7 +83,6 @@ to the [ncurses man pages](https://invisible-island.net/ncurses/man/ncurses.3x.h
 
 ### Non-wide characters
 
-- curs_extend
 - curs_legacy
 - curs_memleaks
 - curs_pad
